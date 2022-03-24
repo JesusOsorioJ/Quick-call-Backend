@@ -6,4 +6,4 @@ const router = Router();
 router.get('/', handlerAllTask)
 router.get('/:id', handlerOneTask);
 
-module.exports = router;
+module.exports = route;
