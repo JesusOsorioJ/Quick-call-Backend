@@ -1,0 +1,27 @@
+{
+  "name": "quick-call-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JesusOsorioJ/Quick-call-Backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JesusOsorioJ/Quick-call-Backend/issues"
+  },
+  "homepage": "https://github.com/JesusOsorioJ/Quick-call-Backend#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15"
+  }
+}
