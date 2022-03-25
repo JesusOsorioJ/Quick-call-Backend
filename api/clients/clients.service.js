@@ -1,17 +1,12 @@
+const clientsModel = require('./clients.model');
 const ClientModel = require('./clients.model');
 
 async function getAllClients() {
   return await ClientModel.find();
 }
 
-function getOneClient(id) {
-    const task = tasks.find(task => task.id === Number(id));
-  
-    if (!task) {
-      return null;
-    }
-  
-    return task;
+async function getOneClient(id) {
+    return await ClientModel.findById(id);
 }
 
 module.exports = {
