@@ -1,19 +1,22 @@
 const mongoose = require('mongoose');
 
-const paymentInfo = new mongoose.Schema({
-    cardNumber: {
-        type: Number,
-        required: true
+const paymentSchema = new mongoose.Schema(
+    {
+        cardNumber: {
+            type: Number,
+            required: true
+        },
+        expDate: {
+            type: String,
+            required: true
+        },
+        cvv: {
+            type: Number,
+            required: true
+        }
     },
-    expDate: {
-        type: String,
-        required: true
-    },
-    cvv: {
-        type: Number,
-        required: true
-    }
-});
+    { _id: false }
+);
 
 const ClientSchema = new mongoose.Schema(
     {
@@ -35,21 +38,25 @@ const ClientSchema = new mongoose.Schema(
         },
         phoneNumber: {
             type: Number,
-            trim: true
+            trim: true,
+            default: null
         },
         city: {
             type: String,
-            trim: true
+            trim: true,
+            default: null
         },
         profile: {
             type: String,
             default: "avatar.png"
         },
         payment: {
-            type: [paymentInfo],
+            type: [paymentSchema],
             default: null
         }
     },
     { timestamps: true },
     { versionKey: false }
-)
+);
+
+module.exports = mongoose.model('Client', ClientSchema);
