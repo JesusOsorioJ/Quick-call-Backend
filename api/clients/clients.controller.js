@@ -1,8 +1,7 @@
 const { getAllClients, getOneClient } = require('./clients.service')
   
 async function handlerAllClients(req, res) {
-  const clients = await getAllClients();
-  res.json(clients);
+  res.json(await getAllClients());
 }  
 
 function handlerOneClient(req, res) {

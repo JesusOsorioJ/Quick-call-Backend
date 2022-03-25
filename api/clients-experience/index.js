@@ -1,8 +1,8 @@
 const {Router} = require('express');
-const {handlerOneTask} = require('./clientsExperience.controller');
+const { handlerAllClientExperiences } = require('./clientsExperience.controller');
 
 const router = Router();
 
-router.get('/',handlerOneTask);
+router.get('/', handlerAllClientExperiences);
 
 module.exports = router;

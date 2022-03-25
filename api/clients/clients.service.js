@@ -1,7 +1,6 @@
 const ClientModel = require('./clients.model');
 
 async function getAllClients() {
-  console.log(ClientModel.find())
   return await ClientModel.find();
 }
 
