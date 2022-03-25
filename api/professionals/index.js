@@ -3,6 +3,6 @@ const {handlerOneTask} = require('./professionals.controller');
 
 const router = Router();
 
-router.get('/',handlerOneTask);
+// router.get('/:id', handlerOneTask);
 
 module.exports = router;

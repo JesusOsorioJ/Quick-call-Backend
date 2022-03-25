@@ -1,9 +1,9 @@
-const {Router} = require('express');
-const {handlerAllTask, handlerOneTask} = require('./clients.controller');
+const Router = require('express');
+const { handlerAllClients, handlerOneClient } = require('./clients.controller');
 
 const router = Router();
 
-router.get('/', handlerAllTask)
-router.get('/:id', handlerOneTask);
+router.get('/', handlerAllClients)
+router.get('/:id', handlerOneClient);
 
 module.exports = router;

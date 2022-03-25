@@ -1,36 +1,15 @@
-const tasks = [
-    {
-      id: 1,
-      title: 'Task 1',
-      description: 'Description 1',
-      completed: true,
-    },
-    {
-      id: 2,
-      title: 'Task 2',
-      description: 'Description 2',
-      completed: false,
-    },
-    {
-      id: 3,
-      title: 'Task 3',
-      description: 'Description 3',
-      completed: false,
-    },
-  ]
+const clientsModel = require('./clients.model');
+const ClientModel = require('./clients.model');
 
-  function getAllTask() {
-    return tasks;
-  }
+async function getAllClients() {
+  return await ClientModel.find();
+}
 
-function getOneTask(id) {
-    const task = tasks.find(task => task.id === Number(id));
-  
-    if (!task) {
-      return null;
-    }
-  
-    return task;
-  }
+async function getOneClient(id) {
+    return await ClientModel.findById(id);
+}
 
-module.exports={getAllTask, getOneTask}
+module.exports = {
+  getAllClients, 
+  getOneClient
+}

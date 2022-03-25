@@ -1,21 +1,22 @@
-const {getAllTask, getOneTask} = require('./clients.service')
+const { getAllClients, getOneClient } = require('./clients.service')
   
-function handlerAllTask(req, res) {
-  const tasks = getAllTask();
-  res.json(tasks);
+async function handlerAllClients(req, res) {
+  res.json(await getAllClients());
 }  
 
-function handlerOneTask(req, res) {
+async function handlerOneClient(req, res) {
     const id = req.params.id;
-    console.log('xxxxxxxxxxxx')
-    const task = getOneTask(id);
+    const client = await getOneClient(id);
   
-    if (!task) {
-      res.status(404).json({ message: `Task not found with id: ${id}` });
+    if (!client) {
+      res.status(404).json({ message: `Client not found with id: ${id}` });
     } else {
-      res.json(task);
+      res.json(client);
     }
   }
 
-  module.exports= {handlerAllTask, handlerOneTask}
+module.exports= {
+  handlerAllClients, 
+  handlerOneClient
+}
   
