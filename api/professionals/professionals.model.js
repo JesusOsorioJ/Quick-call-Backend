@@ -14,7 +14,8 @@ const specialty = new mongoose.Schema(
             type: String,
             required: true
         }
-    }
+    },
+    { _id: false }
 );
 
 const image = new mongoose.Schema(
@@ -27,7 +28,8 @@ const image = new mongoose.Schema(
             data: Buffer,
             contentType: String
         }
-    }
+    },
+    { _id: false }
 );
 
 const socialSecurity = new mongoose.Schema (
@@ -40,7 +42,8 @@ const socialSecurity = new mongoose.Schema (
             type: String,
             required: true
         }
-    }
+    },
+    { _id: false }
 );
 
 const availability = new mongoose.Schema(
@@ -53,7 +56,8 @@ const availability = new mongoose.Schema(
             type: Boolean,
             required: true
         }
-    }
+    },
+    { _id: false }
 );
 
 const professionalSchema = new mongoose.Schema(
