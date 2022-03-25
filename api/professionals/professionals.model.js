@@ -1,4 +1,4 @@
-const moongose = require('mongoose');
+const mongoose = require('mongoose');
 
 const specialty = new mongoose.Schema(
     {
@@ -110,4 +110,4 @@ const professionalSchema = new mongoose.Schema(
     { versionKey: false }
 );
 
-module.exports = new mongoose.model('Professional', professionalSchema);
+module.exports = new mongoose.model('professional', professionalSchema);
