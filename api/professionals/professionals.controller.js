@@ -5,15 +5,6 @@ const { AllProfessionals,
   TypeProfessional
 } = require("./professionals.service");
 
-//consultar todos los professionales
-//buscar todos los profesionalesxx
-//editar datos de profesional
-//Consultar o consultar disponibilidad de professional  (ciudad, disponibilidad-hora o 24 horas)
-//filtrar o consultar por especialidad y acreditacion
-//buscar por tipo de contrato (empresa o persona)
-//experiencia en plataforma
-
-
 async function handlerAllProfessionals(req, res) {
   const professional = await AllProfessionals();
   res.json(professional);
@@ -54,7 +45,6 @@ async function handlerTypeProfessional(req, res) {
     res.json(professional);
   }
 }
-
 
 module.exports = {
   handlerAllProfessionals,

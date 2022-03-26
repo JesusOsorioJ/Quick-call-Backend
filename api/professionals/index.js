@@ -9,15 +9,16 @@ const {
 
 const router = Router();
 
-//consultar todos los professionales
-//buscar por profesional
-//Crear un profesional
-//editar datos de profesional
-//Consultar o consultar disponibilidad de professional  (ciudad, disponibilidad-hora o 24 horas)
-//filtrar o consultar por especialidad y acreditacion
-//buscar por tipo de contrato (empresa o persona)
-//experiencia en plataforma
-//(filter (disponibility,especiality,contract,experience) type:((horas o 24), (acreditado o no), (empresa o persona ), (años)))
+// (handlerAllProfessionals) consultar todos los professionales
+// (handlerOneProfessional) buscar por profesional
+// (handlerCreateProfessional) Crear un profesional
+// (handlerEditProfessional) editar datos de profesional
+// (handlerTypeProfessional) Consultar o consultar disponibilidad de professional  (ciudad, disponibilidad-hora o 24 horas)
+// (handlerTypeProfessional) filtrar o consultar por especialidad y acreditacion
+// (handlerTypeProfessional) buscar por tipo de contrato (empresa o persona)
+// (handlerTypeProfessional) experiencia en plataforma
+// "FILTER" (disponibility,especiality,contract,experience) 
+// "TYPE" :((horas o 24), (acreditado o no acreditado), (empresa o persona ), (años experiencia)))
 
 router.get("/", handlerAllProfessionals);
 router.get("/:id", handlerOneProfessional);

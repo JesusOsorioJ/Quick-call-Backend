@@ -5,12 +5,12 @@ async function AllProfessionals (){
 }
 
 async function OneProfessional(id){
-  const task = await professionals.findById(id)
-  if (!task) {
+  const professional = await professionals.findById(id)
+  if (!professional) {
     return null;
   }
 
-  return task;
+  return professional;
 }
 
 async function CreateProfessional (body) {
