@@ -4,4 +4,9 @@ async function getAllJobs() {
   return await jobsModel.find();
 }
 
-module.exports = { getAllJobs };
+async function createJob(job) {
+  return await jobsModel.create(job);
+}
+
+
+module.exports = { getAllJobs, createJob };

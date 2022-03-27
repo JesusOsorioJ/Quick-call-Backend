@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const jobsSchema = new mongoose.Schema(
+const JobsSchema = new mongoose.Schema(
   {
       client: {
         type: String
@@ -37,7 +37,7 @@ const jobsSchema = new mongoose.Schema(
         type: String
       },
   },
-  { _id: false }
+  { _id: mongoose.Schema.Types.ObjectId}
 );
 
-module.exports = new mongoose.model('jobs', jobsSchema);
+module.exports = new mongoose.model('jobs', JobsSchema);

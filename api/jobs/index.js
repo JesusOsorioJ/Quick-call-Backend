@@ -1,8 +1,9 @@
 const {Router} = require('express');
-const { handlerAllJobs } = require('./jobs.controller');
+const { handlerAllJobs, handlerCreateJob } = require('./jobs.controller');
 
 const router = Router();
 
 router.get('/', handlerAllJobs);
+router.post('/', handlerCreateJob);
 
 module.exports = router;
