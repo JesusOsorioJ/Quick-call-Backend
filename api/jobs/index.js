@@ -1,8 +1,8 @@
 const {Router} = require('express');
-const {handlerOneTask} = require('./jobs.controller');
+const { handlerAllJobs } = require('./jobs.controller');
 
 const router = Router();
 
-router.get('/',handlerOneTask);
+router.get('/', handlerAllJobs);
 
 module.exports = router;
