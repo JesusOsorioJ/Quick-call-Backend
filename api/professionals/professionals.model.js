@@ -4,15 +4,15 @@ const specialty = new mongoose.Schema(
     {
         certified: {
             type: String,
-            required: true
+            required: false
         },
         inProgress: {
             type: String,
-            required: true
+            required: false
         },
         nonCertified: {
             type: String,
-            required: true
+            required: false
         }
     },
     { _id: false }
@@ -36,11 +36,11 @@ const socialSecurity = new mongoose.Schema (
     {
         eps: {
             type: String,
-            required: true
+            required: false
         },
         arl: {
             type: String,
-            required: true
+            required: false
         }
     },
     { _id: false }
@@ -50,11 +50,11 @@ const availability = new mongoose.Schema(
     {
         schedule: {
             type: String,
-            required: true
+            required: false
         },
         fullAvailability: {
             type: Boolean,
-            required: true
+            required: false
         }
     },
     { _id: false }
@@ -64,16 +64,16 @@ const professionalSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            required: true
+            required: false
         },
         email: {
             type: String,
-            required: true,
+            required: false,
             trim: true
         },
         password: {
             type: String,
-            required: true,
+            required: false,
             trim: true
         },
         phoneNumber: {
@@ -86,7 +86,7 @@ const professionalSchema = new mongoose.Schema(
         },
         myDescription: {
             type: String,
-            required: true,
+            required: false,
             trim: true
         },
         specialty: {
