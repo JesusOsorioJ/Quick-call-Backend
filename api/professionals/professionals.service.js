@@ -1,21 +1,38 @@
 const professionals = require('./professionals.model') 
 
-function search (properties, values){
-  const buscar = professionals.find({propeties:values})
+async function AllProfessionals (){
+  return await professionals.find()
 }
 
-function search1 (properties, values, values1){
-  const buscar = professionals.find({prop:req})
-}
-
-function getOne (id) {
-    const task = tasks.find(task => task.id === Number(id));
-  
-    if (!task) {
-      return null;
-    }
-  
-    return task;
+async function OneProfessional(id){
+  const professional = await professionals.findById(id)
+  if (!professional) {
+    return null;
   }
 
-module.exports={search}
+  return professional;
+}
+
+async function CreateProfessional (body) {
+  return await professionals.create(body);
+}
+
+async function EditProfessional (id, change) {
+  return await professionals.findByIdAndUpdate(id, change);
+}
+
+async function TypeProfessional (filter, type, subtype) {
+  if (!subtype){
+    return await professionals.find({[filter]:type});
+  }
+    const filters = (filter+"."+type);
+    return await professionals.find({[filters]:subtype});
+}
+
+module.exports={ 
+  AllProfessionals,
+  OneProfessional,
+  CreateProfessional,
+  EditProfessional,
+  TypeProfessional
+}
