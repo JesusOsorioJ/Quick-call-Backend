@@ -6,9 +6,9 @@ async function handlerAllJobs(req, res) {
 
 async function handlerCreateJob(req, res) {
   const newJob = req.body;
-  const professional = createJob(newJob);
+  const job = createJob(newJob);
 
-  return res.status(201).json(professional);
+  return res.status(201).json(job);
 }
 
 

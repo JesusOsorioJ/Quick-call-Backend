@@ -3,12 +3,10 @@ const mongoose = require('mongoose');
 const evidence = new mongoose.Schema(
   {
       videos: {
-          data: Buffer,
-          contentType: String
+        type: []
       },
       photos: {
-          data: Buffer,
-          contentType: String
+        type: []
       }
   },
   { _id: false }
@@ -17,19 +15,19 @@ const evidence = new mongoose.Schema(
 const PQRSSchema = new mongoose.Schema(
   {
       client: {
-          type: String,
-          required: true
+        type: String,
+        required: true
       },
       date: {
-          type: Date
+        type: Date
       },
       professional: {
-          type: String,
-          required: true
+        type: String,
+        required: true
       },
       subject: {
-          type: String,
-          required: true
+        type: String,
+        required: true
       },
       description: {
         type: String,
@@ -41,7 +39,7 @@ const PQRSSchema = new mongoose.Schema(
         default: null
       },
   },
-  { _id: false }
+  { _id: mongoose.Schema.Types.ObjectId }
 );
 
 module.exports = new mongoose.model('PQRS', PQRSSchema);

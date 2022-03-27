@@ -4,4 +4,8 @@ async function getAllPQRS() {
   return await PQRSModel.find();
 }
 
-module.exports = { getAllPQRS };
+async function createPQR(pqr) {
+  return await PQRSModel.create(pqr);
+}
+
+module.exports = { getAllPQRS, createPQR };
