@@ -1,14 +1,15 @@
-const {getOneTask} = require('./jobs.service')
-  
-  function handlerOneTask(req, res) {
-    const id = req.params.id;
-    const task = getOneTask(id);
-  
-    if (!task) {
-      res.status(404).json({ message: `Task not found with id: ${id}` });
-    } else {
-      res.json(task);
-    }
-  }
+const { getAllJobs, createJob } = require('./jobs.service')
 
-  module.exports= { handlerOneTask}
+async function handlerAllJobs(req, res) {
+  res.json(await getAllJobs());
+}
+
+async function handlerCreateJob(req, res) {
+  const newJob = req.body;
+  const job = createJob(newJob);
+
+  return res.status(201).json(job);
+}
+
+
+module.exports= { handlerAllJobs, handlerCreateJob };

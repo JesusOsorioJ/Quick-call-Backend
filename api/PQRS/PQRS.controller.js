@@ -1,14 +1,14 @@
-const {getOneTask} = require('./PQRS.service')
-  
-  function handlerOneTask(req, res) {
-    const id = req.params.id;
-    const task = getOneTask(id);
-  
-    if (!task) {
-      res.status(404).json({ message: `Task not found with id: ${id}` });
-    } else {
-      res.json(task);
-    }
-  }
+const { getAllPQRS, createPQR } = require('./PQRS.service')
 
-  module.exports= { handlerOneTask}
+async function handlerAllPQRS(req, res) {
+  res.json(await getAllPQRS());
+}
+
+async function handlerCreatePQR(req, res) {
+  const newPQR = req.body;
+  const pqr = createPQR(newPQR);
+
+  return res.status(201).json(pqr);
+}
+
+module.exports= { handlerAllPQRS, handlerCreatePQR };

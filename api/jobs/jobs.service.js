@@ -1,32 +1,12 @@
-const tasks = [
-    {
-      id: 1,
-      title: 'Task 1',
-      description: 'Description 1',
-      completed: true,
-    },
-    {
-      id: 2,
-      title: 'Task 2',
-      description: 'Description 2',
-      completed: false,
-    },
-    {
-      id: 3,
-      title: 'Task 3',
-      description: 'Description 3',
-      completed: false,
-    },
-  ]
+const jobsModel = require('./jobs.model');
 
-function getOneTask(id) {
-    const task = tasks.find(task => task.id === Number(id));
-  
-    if (!task) {
-      return null;
-    }
-  
-    return task;
-  }
+async function getAllJobs() {
+  return await jobsModel.find();
+}
 
-module.exports={getOneTask}
+async function createJob(job) {
+  return await jobsModel.create(job);
+}
+
+
+module.exports = { getAllJobs, createJob };

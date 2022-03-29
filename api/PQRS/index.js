@@ -1,8 +1,9 @@
 const {Router} = require('express');
-const {handlerOneTask} = require('./PQRS.controller');
+const { handlerAllPQRS, handlerCreatePQR } = require('./PQRS.controller');
 
 const router = Router();
 
-router.get('/',handlerOneTask);
+router.get('/', handlerAllPQRS);
+router.post('/', handlerCreatePQR);
 
 module.exports = router;
