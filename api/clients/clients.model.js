@@ -60,7 +60,7 @@ const ClientSchema = new mongoose.Schema(
     { versionKey: false }
 );
 
-ClientSchema.pre('save', async function (next) {
+ClientSchema.pre(['save', 'findByIdAndUpdate'], async function (next) {
     const user = this;
     try {
       if (!user.isModified('password')) {
@@ -79,7 +79,6 @@ ClientSchema.pre('save', async function (next) {
 
 ClientSchema.methods.comparePassword = async function (candidatePassword) {
     const user = this;
-
     return bcrypt.compare(candidatePassword, user.password);
 };
 

@@ -1,11 +1,11 @@
 const { Router } = require('express');
 
-const { handlerLoginUser } = require('./local.controller');
+const { handlerLoginClient } = require('./local.controller');
 
 const router = Router();
 
 // /auth/local/login
-router.post('/login', handlerLoginUser);
+router.post('/login', handlerLoginClient);
 // /auth/local/forgot-password
 // /auth/local/verify-account
 

@@ -1,6 +1,6 @@
 const jsonwebtoken = require('jsonwebtoken');
 
-const { getUserByEmail } = require('../api/clients/clients.service');
+const { getClientByEmail } = require('../api/clients/clients.service');
 
 /**
  * Validate JWT
@@ -35,7 +35,7 @@ async function isAuthenticated(req, res, next) {
   }
 
   // 6. buscar el usuario por el email del payload del token
-  const user = await getUserByEmail(payload.email);
+  const user = await getClientByEmail(payload.email);
 
   if (!user) {
     return res.status(401).end();

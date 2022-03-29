@@ -1,3 +1,4 @@
+const clientsModel = require('./clients.model');
 const {
   getAllClients,
   getOneClient,
