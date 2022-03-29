@@ -9,7 +9,20 @@ async function getOneClient(id) {
     return await ClientModel.findById(id);
 }
 
+async function getUserByEmail(email){
+  return await ClientModel.findOne({ email });
+}
+
+async function createClient (body) {
+  try {
+    return await ClientModel.create(body);
+  } catch (error) {
+    console.log(error)
+  }
+  
+}
+
 module.exports = {
   getAllClients, 
-  getOneClient
+  getOneClient, createClient
 }

@@ -1,9 +1,10 @@
 const Router = require('express');
-const { handlerAllClients, handlerOneClient } = require('./clients.controller');
+const { handlerAllClients, handlerOneClient, handlerCreateClient } = require('./clients.controller');
 
 const router = Router();
 
-router.get('/', handlerAllClients)
+router.get('/', handlerAllClients);
 router.get('/:id', handlerOneClient);
+router.post('/', handlerCreateClient);
 
 module.exports = router;

@@ -3,6 +3,7 @@ const jobs = require('./api/jobs');
 const PQRS = require('./api/PQRS');
 const professionals = require('./api/professionals');
 const clients_experience = require('./api/clients-experience');
+const authLocal = require('./auth/local');
 
 function routes(app){
     app.use('/api/clients', clients)
@@ -10,6 +11,7 @@ function routes(app){
     app.use('/api/PQRS', PQRS)
     app.use('/api/professionals', professionals)
     app.use('/api/clients-experiences', clients_experience)
+    app.use('auth/local', authLocal)
 }
 
 module.exports = routes

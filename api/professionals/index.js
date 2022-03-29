@@ -24,7 +24,7 @@ router.get("/", handlerAllProfessionals);
 router.get("/:id", handlerOneProfessional);
 router.post("/", handlerCreateProfessional);
 router.patch("/:id", handlerEditProfessional);
-router.get("/:filter/:type/:subtype",handlerTypeProfessional);
+router.get("/:filter/:type/:subtype",handlerTypeProfessional); // '/filter/:filter/type/:type'  /filter?filter="test"&type="test"
 router.get("/:filter/:type", handlerTypeProfessional);
 
 module.exports = router;
