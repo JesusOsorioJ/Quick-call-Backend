@@ -1,4 +1,4 @@
-const { getAllClients, getOneClient } = require('./clients.service')
+const { getAllClients, getOneClient, createClient } = require('./clients.service')
   
 async function handlerAllClients(req, res) {
   res.json(await getAllClients());
@@ -15,8 +15,14 @@ async function handlerOneClient(req, res) {
     }
   }
 
+  async function handlerCreateClient(req, res) {
+    const newClient = req.body;
+    const client = await createClient(newClient);
+  
+    return res.status(201).json(client);
+  }
 module.exports= {
   handlerAllClients, 
-  handlerOneClient
+  handlerOneClient, handlerCreateClient
 }
   
