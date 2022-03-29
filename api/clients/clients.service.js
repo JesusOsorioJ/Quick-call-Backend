@@ -1,5 +1,7 @@
+const res = require('express/lib/response');
 const clientsModel = require('./clients.model');
 const ClientModel = require('./clients.model');
+const mongoose = require('mongoose');
 
 async function getAllClients() {
   return await ClientModel.find();
@@ -13,11 +15,12 @@ async function getClientByEmail(email){
   return await ClientModel.findOne({ email });
 }
 
-async function createClient (body) {
+async function createClient(body) {
+  const newClient = new ClientModel(body);
   try {
-    return await ClientModel.create(body);
+    return clientsModel.insertMany(newClient);
   } catch (error) {
-    console.log(error)
+    console.log("catch create", error);
   }
 
 }
@@ -27,7 +30,7 @@ async function updateClient(id, body) {
     const updatedClient = await ClientModel.findByIdAndUpdate(id, body)
     return updatedClient;
   } catch (error) {
-    console.log(error);
+    console.log("catch update", error);
   }
 }
 

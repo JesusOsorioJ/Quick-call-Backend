@@ -47,7 +47,7 @@ const ClientSchema = new mongoose.Schema(
             trim: true,
             default: null
         },
-        profile: {
+        profilePicture: {
             type: String,
             default: "avatar.png"
         },
@@ -66,32 +66,32 @@ ClientSchema.pre('save', async function (next) {
       if (!user.isModified('password')) {
         return next();
       }
-  
+
       const salt = await bcrypt.genSalt(10);
       const hash = await bcrypt.hash(user.password, salt);
-  
+
       user.password = hash;
       return next(user);
     } catch (error) {
       return next(error);
     }
   });
-  
+
 ClientSchema.methods.comparePassword = async function (candidatePassword) {
     const user = this;
-  
+
     return bcrypt.compare(candidatePassword, user.password);
 };
-  
-ClientSchema.virtual('profile1').get(function () {
+
+ClientSchema.virtual('profile').get(function () {
 const {
       name, email,
     } = this;
-  
+
     return {
       name,
       email,
     };
   });
-  
+
 module.exports = mongoose.model('Client', ClientSchema);
