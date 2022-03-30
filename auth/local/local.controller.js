@@ -1,22 +1,21 @@
-const { getUserByEmail } = require('../../api/clients/clients.service');
+const { getClientByEmail } = require('../../api/clients/clients.service');
 const { signToken } = require('../auth.service');
 
-async function handlerLoginUser(req, res) {
+async function handlerLoginClient(req, res) {
   const { email, password } = req.body;
 
   try {
-    const user = await getUserByEmail(email);
-
-    if (!user) {
+    const client = await getClientByEmail(email);
+    if (!client) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    const isMatch = await user.comparePassword(password);
+    const isMatch = await client.comparePassword(password);
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    const token = signToken(user.profile);
+    const token = signToken(client.profile);
 
     return res.status(200).json(token);
   } catch (error) {
@@ -25,5 +24,5 @@ async function handlerLoginUser(req, res) {
 }
 
 module.exports = {
-  handlerLoginUser,
+  handlerLoginClient,
 };

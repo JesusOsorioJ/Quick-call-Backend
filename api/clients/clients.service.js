@@ -1,5 +1,7 @@
+const res = require('express/lib/response');
 const clientsModel = require('./clients.model');
 const ClientModel = require('./clients.model');
+const mongoose = require('mongoose');
 
 async function getAllClients() {
   return await ClientModel.find();
@@ -9,20 +11,27 @@ async function getOneClient(id) {
     return await ClientModel.findById(id);
 }
 
-async function getUserByEmail(email){
+async function getClientByEmail(email){
   return await ClientModel.findOne({ email });
 }
 
-async function createClient (body) {
+async function createClient(body) {
+  return await ClientModel.create(body);
+}
+
+async function updateClient(id, body) {
   try {
-    return await ClientModel.create(body);
+    const updatedClient = await ClientModel.findByIdAndUpdate(id, body)
+    return updatedClient;
   } catch (error) {
-    console.log(error)
+    console.log("catch update", error);
   }
-  
 }
 
 module.exports = {
-  getAllClients, 
-  getOneClient, createClient
+  getAllClients,
+  getOneClient,
+  getClientByEmail,
+  createClient,
+  updateClient,
 }

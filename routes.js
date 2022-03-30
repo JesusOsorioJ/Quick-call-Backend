@@ -11,7 +11,7 @@ function routes(app){
     app.use('/api/PQRS', PQRS)
     app.use('/api/professionals', professionals)
     app.use('/api/clients-experiences', clients_experience)
-    app.use('auth/local', authLocal)
+    app.use('/auth/local', authLocal)
 }
 
 module.exports = routes
