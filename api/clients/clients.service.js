@@ -16,13 +16,7 @@ async function getClientByEmail(email){
 }
 
 async function createClient(body) {
-  const newClient = new ClientModel(body);
-  try {
-    return clientsModel.insertMany(newClient);
-  } catch (error) {
-    console.log("catch create", error);
-  }
-
+  return await ClientModel.create(body);
 }
 
 async function updateClient(id, body) {

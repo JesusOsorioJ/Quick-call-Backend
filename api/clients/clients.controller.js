@@ -20,25 +20,13 @@ async function handlerOneClient(req, res) {
     }
   }
 
-// async function handlerCreateClient(req, res) {
-//   const newClient = req.body;
-
-//   try {
-//     const client = createClient(newClient);
-//     return res.status(201).json(client);
-
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json(error);
-//   }
-// }
-
 async function handlerCreateClient(req, res) {
   const newClient = req.body;
   try {
     const client = await createClient(newClient);
     return res.status(201).json(client);
   } catch (error) {
+    console.log('error: ', error);
     res.status(500).json(error);
   }
 }

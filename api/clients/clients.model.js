@@ -71,9 +71,10 @@ ClientSchema.pre(['save', 'findByIdAndUpdate'], async function (next) {
       const hash = await bcrypt.hash(user.password, salt);
 
       user.password = hash;
-      return next(user);
+      return user;
+
     } catch (error) {
-      return next(error);
+        return error;
     }
   });
 
