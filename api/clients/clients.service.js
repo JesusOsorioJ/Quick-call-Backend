@@ -1,7 +1,4 @@
-const res = require('express/lib/response');
-const clientsModel = require('./clients.model');
 const ClientModel = require('./clients.model');
-const mongoose = require('mongoose');
 
 async function getAllClients() {
   return await ClientModel.find();
