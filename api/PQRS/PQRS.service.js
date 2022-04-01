@@ -8,4 +8,8 @@ async function createPQR(pqr) {
   return await PQRSModel.create(pqr);
 }
 
-module.exports = { getAllPQRS, createPQR };
+async function getPQRById(id) {
+  return await PQRSModel.findById(id);
+}
+
+module.exports = { getAllPQRS, createPQR, getPQRById };
