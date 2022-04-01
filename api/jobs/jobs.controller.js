@@ -1,4 +1,4 @@
-const { getAllJobs, createJob } = require('./jobs.service')
+const { getAllJobs, createJob, getJobById } = require('./jobs.service')
 
 async function handlerAllJobs(req, res) {
   res.json(await getAllJobs());
@@ -11,5 +11,13 @@ async function handlerCreateJob(req, res) {
   return res.status(201).json(job);
 }
 
+async function handlerGetJobById(req, res) {
+  const id = req.params.id;
+  const job = await getJobById(id);
+  if (!job) {
+    return res.status(404).json({ message: 'Job not found' });
+  }
+  return res.json(job);
+}
 
-module.exports= { handlerAllJobs, handlerCreateJob };
+module.exports= { handlerAllJobs, handlerCreateJob, handlerGetJobById };
