@@ -60,23 +60,39 @@ const ClientSchema = new mongoose.Schema(
     { versionKey: false }
 );
 
-ClientSchema.pre(['save', 'findByIdAndUpdate'], async function (next) {
+ClientSchema.pre('save', async function (next) {
     const user = this;
+
     try {
-      if (!user.isModified('password')) {
-        return next();
-      }
+        if(!user.isModified('password')) {
+            return next();
+        }
 
       const salt = await bcrypt.genSalt(10);
       const hash = await bcrypt.hash(user.password, salt);
 
       user.password = hash;
-      return user;
+      next();
 
     } catch (error) {
-        return error;
+        return next(error);
     }
-  });
+});
+
+ClientSchema.pre('findByIdAndUpdate', async function (next) {
+    const query = this;
+
+    try {
+        if (query._update.password) {
+            const salt = await bcrypt.genSalt(10);
+            const hashed = await bcrypt.hash(query._update.password, salt)
+            query._update.password = hashed;
+        }
+        next();
+    } catch (error) {
+        return next(error);
+    }
+});
 
 ClientSchema.methods.comparePassword = async function (candidatePassword) {
     const user = this;
