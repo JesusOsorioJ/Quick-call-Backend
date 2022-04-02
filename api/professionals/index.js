@@ -17,14 +17,12 @@ const router = Router();
 // (handlerTypeProfessional) filtrar o consultar por especialidad y acreditacion
 // (handlerTypeProfessional) buscar por tipo de contrato (empresa o persona)
 // (handlerTypeProfessional) experiencia en plataforma
-// "FILTER" (disponibility,especiality,contract,experience) 
+// "FILTER" (disponibility,especiality,contract,experience)
 // "TYPE" :((horas o 24), (acreditado o no acreditado), (empresa o persona ), (años experiencia)))
 
 router.get("/", handlerAllProfessionals);
-router.get("/:id", handlerOneProfessional);
+router.get("/id/:id", handlerOneProfessional);
 router.post("/", handlerCreateProfessional);
 router.patch("/:id", handlerEditProfessional);
-router.get("/:filter/:type/:subtype",handlerTypeProfessional); // '/filter/:filter/type/:type'  /filter?filter="test"&type="test"
-router.get("/:filter/:type", handlerTypeProfessional);
-
+router.get("/filter",handlerTypeProfessional); // '/filter/:filter/type/:type'  /filter?filter="test"&type="test"
 module.exports = router;

@@ -36,7 +36,8 @@ async function handlerEditProfessional(req, res) {
 }
 
 async function handlerTypeProfessional(req, res) {
-  const {filter ,type, subtype} = req.params;
+  console.log("xxxxxxxxxxxxxxxxx");
+  const {filter ,type, subtype} = req.query;
   console.log(filter ,type, subtype)
   const professional = await TypeProfessional (filter, type, subtype);
   if (!professional) {
