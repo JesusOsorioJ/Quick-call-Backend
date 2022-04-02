@@ -5,11 +5,7 @@ async function AllProfessionals (){
 }
 
 async function OneProfessional(id){
-  const professional = await professionals.findById(id)
-  if (!professional) {
-    return null;
-  }
-
+  const professional = await professionals.findById(id);
   return professional;
 }
 
