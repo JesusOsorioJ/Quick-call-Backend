@@ -43,7 +43,7 @@ describe("professionals endpoint", ()=>{
             const response = await request.get('/api/professionals/filter?filter=availability&type=fullAvailability&subtype=false')
             expect(response.status).toEqual(200) 
         })
-        test('should response with a 500 status code when dont find a professionals with the filter', async () => {
+        test('should response with a 404 status code when dont find a professionals with the filter', async () => {
             const response = await request.get('/api/professionals/filter?filter=availability&type=fullAvailability')
             expect(response.status).toEqual(404) 
         })
