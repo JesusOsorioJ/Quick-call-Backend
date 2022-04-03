@@ -4,7 +4,7 @@ const request = supertest(app);
 
 describe("professionals endpoint", ()=>{
     describe('GET /', ()=>{
-        test('should response with a 200 status code', async () => {
+        test('should response with a 200 status code ', async () => {
             const response = await request.get('/api/professionals')
             expect(response.status).toEqual(200) 
         })
