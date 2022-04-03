@@ -2,7 +2,8 @@ const { AllProfessionals,
   OneProfessional,
   CreateProfessional,
   EditProfessional,
-  TypeProfessional
+  TypeProfessional,
+  CategoriesProfessional,
 } = require("./professionals.service");
 
 async function handlerAllProfessionals(req, res) {
@@ -29,7 +30,7 @@ async function handlerCreateProfessional(req, res) {
 async function handlerEditProfessional(req, res) {
   const EditeProfessional = req.body;
   const {id} = req.params
-  
+
   try {
     const profesional = await EditProfessional(id, EditeProfessional);
     return res.status(201).json(profesional);

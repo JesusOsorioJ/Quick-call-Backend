@@ -1,4 +1,4 @@
-const professionals = require('./professionals.model') 
+const professionals = require('./professionals.model')
 
 async function AllProfessionals (){
   return await professionals.find()
@@ -25,10 +25,19 @@ async function TypeProfessional (filter, type, subtype) {
     return await professionals.find({[filters]:subtype});
 }
 
-module.exports={ 
+async function CategoriesProfessional (filter, type) {
+  if (!subtype){
+    return await professionals.find({[filter]:type});
+  }
+    const filters = (filter+"."+type);
+    return await professionals.find({[filters]:subtype});
+}
+
+module.exports={
   AllProfessionals,
   OneProfessional,
   CreateProfessional,
   EditProfessional,
-  TypeProfessional
+  TypeProfessional,
+  CategoriesProfessional
 }
