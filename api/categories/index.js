@@ -1,13 +1,15 @@
 const { Router } = require("express");
 const {
-  handlerCategories,
+  handlerAllCategories,
+  handlerOneCategories,
   handlerCreateCategories,
   handlerEditCategories
 } = require("./categories.controller");
 
 const router = Router();
 
-router.get("/", handlerCategories);
+router.get("/all", handlerAllCategories);
+router.get("/", handlerOneCategories);
 router.post("/", handlerCreateCategories);
 router.patch("/:id", handlerEditCategories);
 

@@ -1,6 +1,10 @@
 const categories = require('./categories.models')
 
-async function  AllCategories(filter, type){
+async function  AllCategories(){
+    return await categories.find();  
+}
+
+async function  OneCategories(filter, type){
     if (!type) {
         return await categories.find({filter:[filter]});
     }else{
@@ -17,6 +21,7 @@ async function EditCategories (id, change) {
 
 module.exports={
     AllCategories,
+    OneCategories,
     CreateCategories,
     EditCategories
 }

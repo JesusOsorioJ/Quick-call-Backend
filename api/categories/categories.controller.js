@@ -1,13 +1,25 @@
 const {
     AllCategories,
+    OneCategories,
     CreateCategories,
     EditCategories
 }=require("./categories.service")
 
-async function handlerCategories(req, res) {
+
+async function handlerAllCategories(req, res) {
+  const {filter ,type} = req.query;
+  try{
+    const Categories = await AllCategories ();
+    res.status(200).json(Categories);
+  } catch(error) {
+    res.status(404).json({ message: `Categories not found with this ${filter}` });
+  }
+}
+
+async function handlerOneCategories(req, res) {
     const {filter ,type} = req.query;
     try{
-      const Categories = await AllCategories (filter, type);
+      const Categories = await OneCategories (filter, type);
       res.status(200).json(Categories);
     } catch(error) {
       res.status(404).json({ message: `Categories not found with this ${filter}` });
@@ -35,7 +47,8 @@ async function handlerCategories(req, res) {
 
 
 module.exports ={
-  handlerCategories,
+  handlerAllCategories,
+  handlerOneCategories,
   handlerCreateCategories,
   handlerEditCategories
 }
