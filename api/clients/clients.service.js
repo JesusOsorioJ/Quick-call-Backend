@@ -17,12 +17,8 @@ async function createClient(body) {
 }
 
 async function updateClient(id, body) {
-  try {
-    const updatedClient = await ClientModel.findByIdAndUpdate(id, body)
-    return updatedClient;
-  } catch (error) {
-    console.log("catch update", error);
-  }
+  const updatedClient = await ClientModel.findByIdAndUpdate(id, body)
+  return updatedClient;
 }
 
 module.exports = {

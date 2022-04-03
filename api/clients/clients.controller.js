@@ -37,6 +37,9 @@ async function handlerUpdateClient(req, res) {
 
   try {
     const client = await updateClient(id, update);
+    if(!client) {
+      return res.status(404).json({ message: `Client not found with id: ${id}` });
+    }
     res.json(client);
 
   } catch (error) {
