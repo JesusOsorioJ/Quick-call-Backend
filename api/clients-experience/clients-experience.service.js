@@ -4,17 +4,11 @@ async function getAllClientExperiences() {
   return await clientExperienceModel.find();
 }
 
-function getOneTask(id) {
-    const task = tasks.find(task => task.id === Number(id));
-  
-    if (!task) {
-      return null;
-    }
-  
-    return task;
+async function createClientExperience(experience) {
+  return await clientExperienceModel.create(experience);
 }
 
 module.exports = {
   getAllClientExperiences,
-  getOneTask
+  createClientExperience
 }

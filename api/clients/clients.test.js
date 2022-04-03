@@ -1,5 +1,4 @@
 const supertest = require('supertest');
-const clientsExperienceModel = require('../clients-experience/clients-experience.model');
 const app = require('../../app');
 const request = supertest(app);
 

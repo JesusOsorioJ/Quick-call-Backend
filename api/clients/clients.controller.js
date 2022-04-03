@@ -26,7 +26,6 @@ async function handlerCreateClient(req, res) {
     const client = await createClient(newClient);
     return res.status(201).json(client);
   } catch (error) {
-    console.log('error: ', error);
     res.status(500).json(error);
   }
 }
