@@ -1,4 +1,4 @@
-const categories = require('.categories.models/')
+const categories = require('./categories.models')
 
 async function  AllCategories(filter, type){
     if (!type) {

@@ -25,10 +25,10 @@ async function handlerCategories(req, res) {
     const {id} = req.params
 
     try {
-      const Categories = await EditCategories (id, EditeProfessional);
+      const Categories = await EditCategories (id, EditeCategories);
       return res.status(201).json(Categories);
     } catch (error) {
-      return res.status(404).json({ message: `Categories not found with id: ${id}` });
+      return res.status(404).json({ message: ` Not found with id: ${id}` });
     }
 
    }

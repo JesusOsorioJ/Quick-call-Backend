@@ -3,7 +3,6 @@ const { AllProfessionals,
   CreateProfessional,
   EditProfessional,
   TypeProfessional,
-  CategoriesProfessional,
 } = require("./professionals.service");
 
 async function handlerAllProfessionals(req, res) {

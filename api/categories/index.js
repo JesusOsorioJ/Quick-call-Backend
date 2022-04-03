@@ -3,7 +3,7 @@ const {
   handlerCategories,
   handlerCreateCategories,
   handlerEditCategories
-} = require("./service.controller");
+} = require("./categories.controller");
 
 const router = Router();
 
