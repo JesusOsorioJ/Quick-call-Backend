@@ -1,7 +1,4 @@
-const res = require('express/lib/response');
-const clientsModel = require('./clients.model');
 const ClientModel = require('./clients.model');
-const mongoose = require('mongoose');
 
 async function getAllClients() {
   return await ClientModel.find();
@@ -20,12 +17,8 @@ async function createClient(body) {
 }
 
 async function updateClient(id, body) {
-  try {
-    const updatedClient = await ClientModel.findByIdAndUpdate(id, body)
-    return updatedClient;
-  } catch (error) {
-    console.log("catch update", error);
-  }
+  const updatedClient = await ClientModel.findByIdAndUpdate(id, body)
+  return updatedClient;
 }
 
 module.exports = {

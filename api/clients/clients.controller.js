@@ -26,7 +26,6 @@ async function handlerCreateClient(req, res) {
     const client = await createClient(newClient);
     return res.status(201).json(client);
   } catch (error) {
-    console.log('error: ', error);
     res.status(500).json(error);
   }
 }
@@ -37,6 +36,9 @@ async function handlerUpdateClient(req, res) {
 
   try {
     const client = await updateClient(id, update);
+    if(!client) {
+      return res.status(404).json({ message: `Client not found with id: ${id}` });
+    }
     res.json(client);
 
   } catch (error) {

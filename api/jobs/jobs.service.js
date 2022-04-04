@@ -8,5 +8,9 @@ async function createJob(job) {
   return await jobsModel.create(job);
 }
 
+async function getJobById(id) {
+  return await jobsModel.findById(id);
+}
 
-module.exports = { getAllJobs, createJob };
+
+module.exports = { getAllJobs, createJob, getJobById };
