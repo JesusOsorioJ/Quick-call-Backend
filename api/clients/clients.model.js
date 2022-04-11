@@ -79,13 +79,16 @@ ClientSchema.pre('save', async function (next) {
     }
 });
 
-ClientSchema.pre('findByIdAndUpdate', async function (next) {
+ClientSchema.pre('findOneAndUpdate', async function (next) {
     const query = this;
 
     try {
         if (query._update.password) {
+            console.log('password changed');
             const salt = await bcrypt.genSalt(10);
+            console.log(salt);
             const hashed = await bcrypt.hash(query._update.password, salt)
+            console.log(hashed);
             query._update.password = hashed;
         }
         next();
