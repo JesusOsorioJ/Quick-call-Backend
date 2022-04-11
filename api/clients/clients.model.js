@@ -79,7 +79,7 @@ ClientSchema.pre('save', async function (next) {
     }
 });
 
-ClientSchema.pre('findByIdAndUpdate', async function (next) {
+ClientSchema.pre('findOneAndUpdate', async function (next) {
     const query = this;
 
     try {
