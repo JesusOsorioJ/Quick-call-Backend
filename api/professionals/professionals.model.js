@@ -3,15 +3,15 @@ const mongoose = require('mongoose');
 const specialty = new mongoose.Schema(
     {
         certified: {
-            type: String,
+            type: Array,
             required: false
         },
         inProgress: {
-            type: String,
+            type: Array,
             required: false
         },
         nonCertified: {
-            type: String,
+            type: Array,
             required: false
         }
     },

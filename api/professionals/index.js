@@ -21,7 +21,7 @@ const router = Router();
 // "TYPE" :((horas o 24), (acreditado o no acreditado), (empresa o persona ), (años experiencia)))
 
 router.get("/", handlerAllProfessionals);
-router.get("/id/:id", handlerOneProfessional);
+router.get("/:id", handlerOneProfessional);
 router.post("/", handlerCreateProfessional);
 router.patch("/:id", handlerEditProfessional);
 router.get("/filter",handlerTypeProfessional); // '/filter/:filter/type/:type'  /filter?filter="test"&type="test"
