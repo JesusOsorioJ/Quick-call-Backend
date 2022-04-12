@@ -6,7 +6,7 @@ const { AllProfessionals,
 } = require("./professionals.service");
 
 async function handlerAllProfessionals(req, res) {
-  const professional = await AllProfessionals();
+  const professional = await AllProfessionals(req.query);
   return res.json(professional);
 }
 
