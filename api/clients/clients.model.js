@@ -108,6 +108,6 @@ const {
       name,
       email,
     };
-  });
+});
 
 module.exports = mongoose.model('Client', ClientSchema);
