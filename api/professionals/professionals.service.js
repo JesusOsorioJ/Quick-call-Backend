@@ -1,6 +1,6 @@
 const professionals = require('./professionals.model')
 
-async function AllProfessionals (query){
+async function AllProfessionals(query) {
   console.log(query);
   return await professionals.find(query)
 }
@@ -18,27 +18,9 @@ async function EditProfessional (id, change) {
   return await professionals.findByIdAndUpdate(id, change);
 }
 
-async function TypeProfessional (filter, type, subtype) {
-  if (!subtype){
-    return await professionals.find({[filter]:type});
-  }
-    const filters = (filter+"."+type);
-    return await professionals.find({[filters]:subtype});
-}
-
-async function CategoriesProfessional (filter, type) {
-  if (!subtype){
-    return await professionals.find({[filter]:type});
-  }
-    const filters = (filter+"."+type);
-    return await professionals.find({[filters]:subtype});
-}
-
 module.exports={
   AllProfessionals,
   OneProfessional,
   CreateProfessional,
   EditProfessional,
-  TypeProfessional,
-  CategoriesProfessional
 }

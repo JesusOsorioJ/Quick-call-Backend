@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const specialty = new mongoose.Schema(
     {
@@ -52,6 +53,14 @@ const availability = new mongoose.Schema(
             type: String,
             required: false
         },
+        startTime: {
+            type: String,
+            default: "00:00",
+        },
+        endTime: {
+            type: String,
+            default: "00:00",
+        },
         fullAvailability: {
             type: Boolean,
             required: false
@@ -78,19 +87,21 @@ const professionalSchema = new mongoose.Schema(
         },
         phoneNumber: {
             type: Number,
+            default: null,
             trim: true,
         },
         city: {
             type: String,
+            default: null,
             trim: true
         },
         myDescription: {
             type: String,
-            required: false,
+            default: null,
             trim: true
         },
         specialty: {
-            type: [specialty],
+            type: specialty,
             default: null
         },
         image: {
@@ -109,5 +120,44 @@ const professionalSchema = new mongoose.Schema(
     { timestamps: true },
     { versionKey: false }
 );
+
+professionalSchema.pre('save', async function (next) {
+    const user = this;
+
+    try {
+        if(!user.isModified('password')) {
+            return next();
+        }
+
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(user.password, salt);
+
+      user.password = hash;
+      next();
+
+    } catch (error) {
+        return next(error);
+    }
+});
+
+professionalSchema.pre('findOneAndUpdate', async function (next) {
+    const query = this;
+
+    try {
+        if (query._update.password) {
+            const salt = await bcrypt.genSalt(10);
+            const hashed = await bcrypt.hash(query._update.password, salt)
+            query._update.password = hashed;
+        }
+        next();
+    } catch (error) {
+        return next(error);
+    }
+});
+
+professionalSchema.methods.comparePassword = async function (candidatePassword) {
+    const user = this;
+    return bcrypt.compare(candidatePassword, user.password);
+};
 
 module.exports = new mongoose.model('professional', professionalSchema);

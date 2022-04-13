@@ -2,7 +2,6 @@ const { AllProfessionals,
   OneProfessional,
   CreateProfessional,
   EditProfessional,
-  TypeProfessional,
 } = require("./professionals.service");
 
 async function handlerAllProfessionals(req, res) {
@@ -37,16 +36,6 @@ async function handlerEditProfessional(req, res) {
     return res.status(404).json({ message: `Profesionals not found with id: ${id}` });
   }
 
- }
-
-async function handlerTypeProfessional(req, res) {
-  const {filter ,type, subtype} = req.query;
-  try{
-    const professional = await TypeProfessional (filter, type, subtype);
-    res.status(200).json(professional);
-  } catch(error) {
-    res.status(404).json({ message: `Professional not found with this ${filter}` });
-  }
 }
 
 module.exports = {
@@ -54,5 +43,4 @@ module.exports = {
   handlerOneProfessional,
   handlerCreateProfessional,
   handlerEditProfessional,
-  handlerTypeProfessional,
 };
