@@ -82,12 +82,12 @@ describe('Clients testing', () => {
         }
 
         test('should respond with status code 200', async () => {
-            const response = await request.patch(`/api/clients/${existentId}`);
+            const response = await request.patch(`/api/clients/${existentId}`).send(update);
             expect(response.statusCode).toEqual(200);
         });
 
         test('should respond with one client', async () => {
-            const response = await request.patch(`/api/clients/${existentId}`);
+            const response = await request.patch(`/api/clients/${existentId}`).send(update);
             expect(response.body).toEqual(expect.objectContaining({
                 name: expect.any(String),
                 email: expect.any(String),
@@ -96,12 +96,12 @@ describe('Clients testing', () => {
         });
 
         test('should respond with status code 404', async () => {
-            const response = await request.patch(`/api/clients/${nonExistentId}`);
+            const response = await request.patch(`/api/clients/${nonExistentId}`).send(update);
             expect(response.statusCode).toEqual(404);
         });
 
         test('should respond with error msg', async () => {
-            const response = await request.patch(`/api/clients/${nonExistentId}`);
+            const response = await request.patch(`/api/clients/${nonExistentId}`).send(update);
             expect(response.body).toEqual({ message: `Client not found with id: ${nonExistentId}` })
         });
     })
