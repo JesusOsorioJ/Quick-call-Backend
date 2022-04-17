@@ -1,26 +1,26 @@
 const professionals = require('./professionals.model')
 
-async function AllProfessionals(query) {
+async function allProfessionals(query) {
   console.log(query);
   return await professionals.find(query)
 }
 
-async function OneProfessional(id){
+async function oneProfessional(id){
   const professional = await professionals.findById(id);
   return professional;
 }
 
-async function CreateProfessional (body) {
+async function createProfessional (body) {
   return await professionals.create(body);
 }
 
-async function EditProfessional (id, change) {
+async function editProfessional (id, change) {
   return await professionals.findByIdAndUpdate(id, change);
 }
 
 module.exports={
-  AllProfessionals,
-  OneProfessional,
-  CreateProfessional,
-  EditProfessional,
+  allProfessionals,
+  oneProfessional,
+  createProfessional,
+  editProfessional,
 }
