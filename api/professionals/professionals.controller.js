@@ -1,18 +1,11 @@
-<<<<<<< HEAD
+const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
+
 const {
   allProfessionals,
   oneProfessional,
   createProfessional,
   editProfessional,
-=======
-const fs = require('fs');
-const cloudinary = require('cloudinary').v2;
-
-const { AllProfessionals,
-  OneProfessional,
-  CreateProfessional,
-  EditProfessional,
->>>>>>> 97085d4efe3e110dc529262986fced6ea594ed35
 } = require("./professionals.service");
 
 async function handlerAllProfessionals(req, res) {
@@ -42,11 +35,6 @@ async function handlerOneProfessional(req, res) {
 }
 
 async function handlerCreateProfessional(req, res) {
-<<<<<<< HEAD
-  const newProfessional = req.body;
-  const profesional = await createProfessional(newProfessional);
-  return res.status(201).json(profesional);
-=======
 
   const  data  = req.body;
   console.log("xxxxxxxxxxxxxxxxxxxxx filles", data)
@@ -70,15 +58,14 @@ async function handlerCreateProfessional(req, res) {
   // const newProfessional = req.body;
   // const profesional = await CreateProfessional(newProfessional);
   // return res.status(201).json(profesional);
->>>>>>> 97085d4efe3e110dc529262986fced6ea594ed35
 }
 
 async function handlerEditProfessional(req, res) {
-  const EditeProfessional = req.body;
+  const editedProfessional = req.body;
   const {id} = req.params
 
   try {
-    const profesional = await editProfessional(id, EditeProfessional);
+    const profesional = await editProfessional(id, editedProfessional);
     return res.status(200).json(profesional);
   } catch (error) {
     return res.status(404).json({ message: `Profesionals not found with id: ${id}` });
