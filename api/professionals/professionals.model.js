@@ -62,7 +62,7 @@ const availability = new mongoose.Schema(
             default: "00:00",
         },
         fullAvailability: {
-            type: Boolean,
+            type: String,
             required: false
         }
     },
