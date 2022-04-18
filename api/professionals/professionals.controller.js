@@ -1,3 +1,6 @@
+const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
+
 const {
   allProfessionals,
   oneProfessional,
@@ -10,6 +13,7 @@ async function handlerAllProfessionals(req, res) {
   return res.json(professional);
 }
 
+
 async function handlerOneProfessional(req, res) {
   const id = req.params.id;
   try{
@@ -20,6 +24,29 @@ async function handlerOneProfessional(req, res) {
   }
 }
 
+
+async function uploadImage(image) {
+  try {
+    const result = await cloudinary.uploader.upload(image);
+    return result;
+  } catch (error) {
+    console.log(error);
+  } finally{
+    fs.unlinkSync(image);
+  }
+}
+
+async function handlerCreateImage(req, res) {
+  try {
+    const { file } = req;
+    const result  = await uploadImage(file.path);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+
 async function handlerCreateProfessional(req, res) {
   const newProfessional = req.body;
   const profesional = await createProfessional(newProfessional);
@@ -27,11 +54,11 @@ async function handlerCreateProfessional(req, res) {
 }
 
 async function handlerEditProfessional(req, res) {
-  const EditeProfessional = req.body;
+  const editedProfessional = req.body;
   const {id} = req.params
 
   try {
-    const profesional = await editProfessional(id, EditeProfessional);
+    const profesional = await editProfessional(id, editedProfessional);
     return res.status(200).json(profesional);
   } catch (error) {
     return res.status(404).json({ message: `Profesionals not found with id: ${id}` });
@@ -44,4 +71,5 @@ module.exports = {
   handlerOneProfessional,
   handlerCreateProfessional,
   handlerEditProfessional,
+  handlerCreateImage,
 };

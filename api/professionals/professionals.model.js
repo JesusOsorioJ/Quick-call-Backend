@@ -3,17 +3,17 @@ const bcrypt = require('bcrypt');
 
 const specialty = new mongoose.Schema(
     {
-        certified: {
-            type: Array,
-            required: false
+        name: {
+            type: String,
+            required: true
         },
-        inProgress: {
-            type: Array,
-            required: false
+        certification: {
+            type: String,
+            default: ''
         },
-        nonCertified: {
-            type: Array,
-            required: false
+        isCertified: {
+            type: Boolean,
+            default: false
         }
     },
     { _id: false }
@@ -22,12 +22,12 @@ const specialty = new mongoose.Schema(
 const image = new mongoose.Schema(
     {
         profile: {
-            data: Buffer,
-            contentType: String
+            type: String,
+            default: 'https://res.cloudinary.com/djymj6koy/image/upload/v1650237628/m3lybocpbl0iuqhdkyfy.svg'
         },
         myJobs: {
-            data: Buffer,
-            contentType: String
+            type: Array,
+            default: null
         }
     },
     { _id: false }
@@ -62,7 +62,7 @@ const availability = new mongoose.Schema(
             default: "00:00",
         },
         fullAvailability: {
-            type: Boolean,
+            type: String,
             required: false
         }
     },
@@ -101,8 +101,7 @@ const professionalSchema = new mongoose.Schema(
             trim: true
         },
         specialty: {
-            type: specialty,
-            default: null
+            type: [specialty]
         },
         image: {
             type: image,
