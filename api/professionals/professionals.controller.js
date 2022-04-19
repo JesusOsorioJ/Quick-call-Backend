@@ -9,8 +9,17 @@ const {
 } = require("./professionals.service");
 
 async function handlerAllProfessionals(req, res) {
-  const professional = await allProfessionals(req.query);
-  return res.json(professional);
+  try {
+    const query = req.query;
+    if(query.specialty) {
+      query.specialty = `{ $elemMatch: { 'name': ${query.specialty}, 'isCertified': true } } }`
+    }
+    //search works empty and with city => doesn't work with specialty
+    const professional = await allProfessionals(query);
+    return res.json(professional);
+  } catch (error) {
+    return res.json(error);
+  }
 }
 
 
