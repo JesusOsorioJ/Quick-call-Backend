@@ -1,5 +1,19 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+
+const location = new mongoose.Schema(
+    {
+        type: {
+            type: String,
+            default: 'Point'
+        },
+        coordinates: {
+            type: [Number],
+            default: [0, 0]
+        }
+    },
+    { _id: false }
+);
 
 const paymentSchema = new mongoose.Schema(
     {
@@ -54,6 +68,14 @@ const ClientSchema = new mongoose.Schema(
         payment: {
             type: [paymentSchema],
             default: null
+        },
+        favorites: {
+            type: [String], // Tiene que ser object id
+            ref: 'professionals',
+            default: null
+        },
+        location: {
+            type: location
         }
     },
     { timestamps: true },

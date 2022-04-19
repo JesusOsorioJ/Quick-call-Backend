@@ -1,6 +1,20 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+const location = new mongoose.Schema(
+    {
+        type: {
+            type: String,
+            default: 'Point'
+        },
+        coordinates: {
+            type: [Number],
+            default: [0, 0]
+        }
+    },
+    { _id: false }
+);
+
 const specialty = new mongoose.Schema(
     {
         name: {
@@ -100,7 +114,7 @@ const professionalSchema = new mongoose.Schema(
             default: null,
             trim: true
         },
-        specialty: {
+        specialties: {
             type: [specialty]
         },
         image: {
@@ -114,6 +128,9 @@ const professionalSchema = new mongoose.Schema(
         availability: {
             type: availability,
             default: null
+        },
+        location: {
+            type: location,
         }
     },
     { timestamps: true },
