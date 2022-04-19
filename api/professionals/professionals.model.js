@@ -159,4 +159,4 @@ professionalSchema.methods.comparePassword = async function (candidatePassword) 
     return bcrypt.compare(candidatePassword, user.password);
 };
 
-module.exports = new mongoose.model('professional', professionalSchema);
+module.exports = mongoose.model('professional', professionalSchema);

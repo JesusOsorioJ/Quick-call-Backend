@@ -1,9 +1,9 @@
 const professionals = require('./professionals.model')
 
 async function allProfessionals(query) {
-  console.log('typeof query: ',typeof query);
-  console.log('query: ', query);
-  return await professionals.find(query)
+  console.log(query);
+  console.log(await professionals.find(query).count());
+  return await professionals.find(query);
 }
 
 async function oneProfessional(id){
