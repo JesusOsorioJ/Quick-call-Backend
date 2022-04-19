@@ -9,8 +9,13 @@ const {
 } = require("./professionals.service");
 
 async function handlerAllProfessionals(req, res) {
-  const professional = await allProfessionals(req.query);
-  return res.json(professional);
+  try {
+    console.log(req.query);
+    const professional = await allProfessionals(req.query);
+    return res.json(professional);
+  } catch (error) {
+    return res.json(error);
+  }
 }
 
 

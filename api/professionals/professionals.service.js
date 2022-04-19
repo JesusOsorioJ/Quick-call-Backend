@@ -1,8 +1,8 @@
 const professionals = require('./professionals.model')
 
 async function allProfessionals(query) {
-  console.log(query);
-  return await professionals.find(query)
+  const h = { name: "Soldador General", isCertified: true }
+  return await professionals.find({ specialties: { $elemMatch: { name: 'Soldador General', isCertified: true } } });
 }
 
 async function oneProfessional(id){
