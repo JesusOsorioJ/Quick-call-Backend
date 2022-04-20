@@ -10,6 +10,15 @@ const {
 
 async function handlerAllProfessionals(req, res) {
   try {
+    if (req.query.specialties) {
+      const specialtyName = req.query.specialties;
+      req.query.specialties = {
+        $elemMatch: {
+          name: specialtyName,
+          isCertified: true,
+        }
+      };
+    }
     console.log(req.query);
     const professional = await allProfessionals(req.query);
     return res.json(professional);
@@ -50,7 +59,6 @@ async function handlerCreateImage(req, res) {
     res.status(500).json(error);
   }
 }
-
 
 async function handlerCreateProfessional(req, res) {
   const newProfessional = req.body;
