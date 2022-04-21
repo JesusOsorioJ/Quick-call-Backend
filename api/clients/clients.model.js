@@ -123,13 +123,14 @@ ClientSchema.methods.comparePassword = async function (candidatePassword) {
 };
 
 ClientSchema.virtual('profile').get(function () {
-const {
-      name, email,
-    } = this;
+    const {
+        name,
+        email
+      } = this;
 
     return {
       name,
-      email,
+      email
     };
 });
 

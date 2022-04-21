@@ -9,6 +9,10 @@ async function oneProfessional(id){
   return professional;
 }
 
+async function getProfessionalByEmail(email){
+  return await professionals.findOne({email});
+}
+
 async function createProfessional (body) {
   return await professionals.create(body);
 }
@@ -20,6 +24,7 @@ async function editProfessional (id, change) {
 module.exports={
   allProfessionals,
   oneProfessional,
+  getProfessionalByEmail,
   createProfessional,
   editProfessional,
 }
