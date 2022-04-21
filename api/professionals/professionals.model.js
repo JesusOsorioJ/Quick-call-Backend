@@ -92,6 +92,7 @@ const professionalSchema = new mongoose.Schema(
         email: {
             type: String,
             required: false,
+            lowercase: true,
             trim: true
         },
         password: {
