@@ -1,6 +1,20 @@
 const jsonwebtoken = require('jsonwebtoken');
 
 const { getClientByEmail } = require('../api/clients/clients.service');
+const { getProfessionalByEmail } = require('../api/professionals/professionals.service');
+
+/**
+ * Returns a jwt token signed by the app secret
+ * @param {String} payload
+ * @returns {String} token
+ */
+ function signToken(payload) {
+  const token = jsonwebtoken.sign(payload, 'secret_token', {
+    expiresIn: '2h',
+  });
+
+  return token;
+}
 
 /**
  * Validate JWT
@@ -35,7 +49,19 @@ async function isAuthenticated(req, res, next) {
   }
 
   // 6. buscar el usuario por el email del payload del token
-  const user = await getClientByEmail(payload.email);
+  let user;
+  switch(payload.role) {
+    case 'client':
+      user = await getClientByEmail(payload.email);
+      break;
+    case 'professional':
+      user = await getProfessionalByEmail(payload.email);
+      break;
+    case 'admin':
+      user = null; // function getAdminByEmail(email)
+    default:
+      return res.status(401).end();
+  }
 
   if (!user) {
     return res.status(401).end();
@@ -46,19 +72,6 @@ async function isAuthenticated(req, res, next) {
   // 8. siga al siguiente middleware next()
   next();
   return null;
-}
-
-/**
- * Returns a jwt token signed by the app secret
- * @param {String} payload
- * @returns {String} token
- */
-function signToken(payload) {
-  const token = jsonwebtoken.sign(payload, 'secret_token', {
-    expiresIn: '2h',
-  });
-
-  return token;
 }
 
 module.exports = {
