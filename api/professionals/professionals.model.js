@@ -21,7 +21,7 @@ const specialty = new mongoose.Schema(
             type: String,
             required: true
         },
-        certification: {
+        certificate: {
             type: String,
             default: ''
         },
@@ -92,6 +92,7 @@ const professionalSchema = new mongoose.Schema(
         email: {
             type: String,
             required: false,
+            lowercase: true,
             trim: true
         },
         password: {
@@ -175,5 +176,17 @@ professionalSchema.methods.comparePassword = async function (candidatePassword) 
     const user = this;
     return bcrypt.compare(candidatePassword, user.password);
 };
+
+professionalSchema.virtual('profile').get(function () {
+    const {
+        name,
+        email
+    } = this;
+
+    return {
+        name,
+        email
+    };
+});
 
 module.exports = mongoose.model('professional', professionalSchema);

@@ -44,6 +44,7 @@ const ClientSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
+            lowercase: true,
             unique: true
         },
         password: {
@@ -122,13 +123,14 @@ ClientSchema.methods.comparePassword = async function (candidatePassword) {
 };
 
 ClientSchema.virtual('profile').get(function () {
-const {
-      name, email,
-    } = this;
+    const {
+        name,
+        email
+      } = this;
 
     return {
       name,
-      email,
+      email
     };
 });
 
