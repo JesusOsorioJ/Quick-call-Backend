@@ -55,9 +55,9 @@ AdminSchema.pre('findOneAndUpdate', async function (next) {
     }
 })
 
-AdminSchema.methods.comparePassword(async function (candidatePassword) {
+AdminSchema.methods.comparePassword = async function (candidatePassword) {
     const user = this;
     return await bcrypt.compare(candidatePassword, user.password);
-})
+}
 
 module.exports = mongoose.model('Admin', AdminSchema);
