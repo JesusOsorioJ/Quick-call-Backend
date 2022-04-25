@@ -17,7 +17,9 @@ async function createClient(body) {
 }
 
 async function updateClient(id, body) {
-  const updatedClient = await ClientModel.findByIdAndUpdate(id, body)
+  const updatedClient = await ClientModel.findByIdAndUpdate(id, body, {
+    new: true
+  })
   return updatedClient;
 }
 

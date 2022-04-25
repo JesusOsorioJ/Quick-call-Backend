@@ -85,9 +85,6 @@ function hasRole(allowedRoles = []) {
     .use(
       async (req, res, next) => {
         const { role } = req.user;
-        console.log(req.user);
-        console.log(role);
-        console.log(allowedRoles)
         if (!allowedRoles.includes(role)) {
           return res.status(403).json('Unauthorized access').end();
         }
