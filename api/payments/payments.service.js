@@ -4,14 +4,14 @@ const Payment = require('./payments.model');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
+//Stripe
 async function createCustomer(user, paymentMethod) {
   try {
     const customer = await stripe.customers.create({
       email: user.email,
-      name: `${user.firstName} ${user.lastName}`,
+      name: user.name,
       payment_method: paymentMethod.id,
     });
-
     return customer;
   } catch (error) {
     console.log('error', error);
@@ -52,6 +52,7 @@ async function makePayment({ paymentMethod, amount, customer }) {
   }
 }
 
+//Mongoose
 function createPayment(payment) {
   return Payment.create(payment);
 }

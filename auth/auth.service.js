@@ -40,7 +40,7 @@ function isAuthenticated() {
       const authHeader = req.headers.authorization;
       // 2. If (authHeader)
       if (!authHeader) {
-        return res.status(401).end();
+        return res.status(401).json('authHeader').end();
       }
       // 3. split para obtener el token
       const [, token] = authHeader.split(' ');
@@ -49,7 +49,7 @@ function isAuthenticated() {
 
       // 5. if token falsy -> decir q no esta authori
       if (!payload) {
-        return res.status(401).end();
+        return res.status(401).json('payload').end();
       }
 
       // 6. buscar el usuario por el email del payload del token
@@ -64,15 +64,15 @@ function isAuthenticated() {
         case 'admin':
           user = await getAdminByEmail(payload.email);
         default:
-          return res.status(401).end();
+          return res.status(401).json('switch').end();
       }
 
       if (!user) {
-        return res.status(401).end();
+        return res.status(401).json('user').end();
       }
 
       // 7. agregar ese usuario al req.user
-      req.user = {...user, role: payload.role};
+      req.user = {...user._doc, role: payload.role};
       // 8. siga al siguiente middleware next()
       next();
       return null;
