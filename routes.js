@@ -6,6 +6,7 @@ const authLocal = require('./auth/local');
 const jobs = require('./api/jobs');
 const PQRS = require('./api/PQRS');
 const categories = require('./api/categories');
+const payments = require('./api/payments');
 
 
 function routes(app){
@@ -17,6 +18,7 @@ function routes(app){
     app.use('/api/jobs', jobs)
     app.use('/api/PQRS', PQRS)
     app.use('/api/categories', categories)
+    app.use('/api/payments', payments)
 }
 
 module.exports = routes
