@@ -44,9 +44,7 @@ async function handlerUpdateClient(req, res) {
   console.log(update);
 
   try {
-    const client = await updateClient(id, update, {
-      new: true
-    });
+    const client = await updateClient(id, update);
     emailAccountUpdated(client.email);
     if(!client) {
       return res.status(404).json({ message: `Client not found with id: ${id}` });
