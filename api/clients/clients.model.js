@@ -15,23 +15,23 @@ const location = new mongoose.Schema(
     { _id: false }
 );
 
-const paymentSchema = new mongoose.Schema(
-    {
-        cardNumber: {
-            type: Number,
-            required: true
-        },
-        expDate: {
-            type: String,
-            required: true
-        },
-        cvv: {
-            type: Number,
-            required: true
-        }
-    },
-    { _id: false }
-);
+// const paymentSchema = new mongoose.Schema(
+//     {
+//         cardNumber: {
+//             type: Number,
+//             required: true
+//         },
+//         expDate: {
+//             type: String,
+//             required: true
+//         },
+//         cvv: {
+//             type: Number,
+//             required: true
+//         }
+//     },
+//     { _id: false }
+// );
 
 const ClientSchema = new mongoose.Schema(
     {
@@ -67,11 +67,11 @@ const ClientSchema = new mongoose.Schema(
             default: "avatar.png"
         },
         payment: {
-            type: [paymentSchema],
+            type: Object,
             default: null
         },
         favorites: {
-            type: [String], // Tiene que ser object id
+            type: [mongoose.Schema.Types.ObjectId],
             ref: 'professionals',
             default: null
         },
