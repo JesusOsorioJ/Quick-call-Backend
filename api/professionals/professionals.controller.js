@@ -21,9 +21,9 @@ async function handlerAllProfessionals(req, res) {
     }
     console.log(req.query);
     const professional = await allProfessionals(req.query);
-    return res.json(professional);
+    return res.status(200).json(professional);
   } catch (error) {
-    return res.json(error);
+    return res.status(400).json(error);
   }
 }
 
@@ -54,16 +54,20 @@ async function handlerCreateImage(req, res) {
   try {
     const { file } = req;
     const result  = await uploadImage(file.path);
-    res.status(200).json(result);
+    return res.status(200).json(result);
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 }
 
 async function handlerCreateProfessional(req, res) {
-  const newProfessional = req.body;
-  const profesional = await createProfessional(newProfessional);
-  return res.status(201).json(profesional);
+  try {
+    const newProfessional = req.body;
+    const profesional = await createProfessional(newProfessional);
+    return res.status(201).json(profesional);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
 }
 
 async function handlerEditProfessional(req, res) {
@@ -76,7 +80,6 @@ async function handlerEditProfessional(req, res) {
   } catch (error) {
     return res.status(404).json({ message: `Profesionals not found with id: ${id}` });
   }
-
 }
 
 module.exports = {

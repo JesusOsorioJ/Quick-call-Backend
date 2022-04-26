@@ -2,6 +2,7 @@ const clientsModel = require('./clients.model');
 const {
   getAllClients,
   getClientById,
+  getClientByEmail,
   createClient,
   updateClient
 } = require('./clients.service');
@@ -15,23 +16,22 @@ async function handlerAllClients(req, res) {
   res.json(await getAllClients());
 }
 
-async function handlerOneClient(req, res) {
+async function handlerClientById(req, res) {
+  try {
     const { id } = req.params;
     const client = await getClientById(id);
-
-    if (!client) {
-      res.status(404).json({ message: `Client not found with id: ${id}` });
-    } else {
-      res.json(client);
-    }
+    return res.status(200).json(client);
+  } catch (error) {
+    return res.status(404).json({ message: `Client not found with id: ${id}` });
+  }
 }
 
-async function handlerClientDashboard(req, res) {
+async function handlerClientByEmail(req, res) {
   try {
-    const userDashboard = await getClientById(req.user._id);
-    res.status(200).json({...userDashboard.dashboardProfile});
+    const userDashboard = await getClientByEmail(req.user.email);
+    return res.status(200).json({...userDashboard.dashboardProfile});
   } catch (error) {
-    res.status(404).json({ message: 'Information not found' });
+    return res.status(404).json({ message: 'Information not found' });
   }
 }
 
@@ -42,7 +42,7 @@ async function handlerCreateClient(req, res) {
     emailClientAccountCreated(client);
     return res.status(201).json(client);
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 }
 
@@ -54,23 +54,18 @@ async function handlerUpdateClient(req, res) {
 
   try {
     const client = await updateClient(id, update);
-    console.log(client);
     emailAccountUpdated(client.email);
-    if(!client) {
-      return res.status(404).json({ message: `Client not found with id: ${id}` });
-    }
-    res.status(200).json(client);
-
+    return res.status(200).json(client);
   } catch (error) {
     console.log(error);
-    res.status(404).json({ message: `Client not found with id: ${id}` });
+    return res.status(404).json({ message: `Client not found with id: ${id}` });
   }
 }
 
 module.exports= {
   handlerAllClients,
-  handlerOneClient,
-  handlerClientDashboard,
+  handlerClientById,
+  handlerClientByEmail,
   handlerCreateClient,
   handlerUpdateClient,
 }

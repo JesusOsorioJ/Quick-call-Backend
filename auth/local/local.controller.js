@@ -1,6 +1,6 @@
 const { getClientByEmail } = require('../../api/clients/clients.service');
 const { getProfessionalByEmail } = require('../../api/professionals/professionals.service');
-const { signToken } = require('../auth.service');
+const { signToken, validateToken } = require('../auth.service');
 
 async function handlerLoginUser(req, res) {
   const { email, password } = req.body;
@@ -29,6 +29,16 @@ async function handlerLoginUser(req, res) {
   }
 }
 
+async function handlerValidateToken(req, res) {
+  try {
+    const payload = await validateToken(req.body.token);
+    return res.status(200).json(payload);
+  } catch (error) {
+    return res.status(400).json('Token inválido, intente nuevamente');
+  }
+};
+
 module.exports = {
   handlerLoginUser,
+  handlerValidateToken,
 };
