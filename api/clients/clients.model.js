@@ -106,7 +106,7 @@ ClientSchema.pre('findOneAndUpdate', async function (next) {
     const query = this;
 
     try {
-        if (query._update.password) {
+        if (query._update?.password) {
             const salt = await bcrypt.genSalt(10);
             const hashed = await bcrypt.hash(query._update.password, salt)
             query._update.password = hashed;

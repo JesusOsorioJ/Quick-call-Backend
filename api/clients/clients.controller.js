@@ -56,7 +56,7 @@ async function handlerUpdateClient(req, res) {
     if(!client) {
       return res.status(404).json({ message: `Client not found with id: ${id}` });
     }
-    res.json(client);
+    res.status(200).json(client);
 
   } catch (error) {
     console.log(error);
