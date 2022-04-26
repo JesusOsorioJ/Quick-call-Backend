@@ -140,7 +140,10 @@ ClientSchema.virtual('dashboardProfile').get(function () {
         name,
         email,
         phoneNumber,
-        city
+        city,
+        profilePicture,
+        favorites,
+        location
     } = this;
 
     return {
@@ -148,7 +151,10 @@ ClientSchema.virtual('dashboardProfile').get(function () {
         name,
         email,
         phoneNumber,
-        city
+        city,
+        profilePicture,
+        favorites,
+        location
     };
 });
 
