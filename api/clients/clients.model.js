@@ -134,4 +134,22 @@ ClientSchema.virtual('profile').get(function () {
     };
 });
 
+ClientSchema.virtual('dashboardProfile').get(function () {
+    const {
+        id,
+        name,
+        email,
+        phoneNumber,
+        city
+    } = this;
+
+    return {
+        id,
+        name,
+        email,
+        phoneNumber,
+        city
+    };
+});
+
 module.exports = mongoose.model('Client', ClientSchema);

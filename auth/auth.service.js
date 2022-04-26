@@ -70,7 +70,6 @@ function isAuthenticated() {
       if (!user) {
         return res.status(401).json('user').end();
       }
-
       // 7. agregar ese usuario al req.user
       req.user = {...user._doc, role: payload.role};
       // 8. siga al siguiente middleware next()

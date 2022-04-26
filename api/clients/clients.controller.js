@@ -1,7 +1,7 @@
 const clientsModel = require('./clients.model');
 const {
   getAllClients,
-  getOneClient,
+  getClientById,
   createClient,
   updateClient
 } = require('./clients.service');
@@ -17,14 +17,23 @@ async function handlerAllClients(req, res) {
 
 async function handlerOneClient(req, res) {
     const { id } = req.params;
-    const client = await getOneClient(id);
+    const client = await getClientById(id);
 
     if (!client) {
       res.status(404).json({ message: `Client not found with id: ${id}` });
     } else {
       res.json(client);
     }
+}
+
+async function handlerClientDashboard(req, res) {
+  try {
+    const userDashboard = await getClientById(req.user._id);
+    res.status(200).json({...userDashboard.dashboardProfile});
+  } catch (error) {
+    res.status(404).json({ message: 'Information not found' });
   }
+}
 
 async function handlerCreateClient(req, res) {
   const newClient = req.body;
@@ -40,8 +49,6 @@ async function handlerCreateClient(req, res) {
 async function handlerUpdateClient(req, res) {
   const { id } = req.params;
   const update = req.body;
-  console.log(id);
-  console.log(update);
 
   try {
     const client = await updateClient(id, update);
@@ -60,6 +67,7 @@ async function handlerUpdateClient(req, res) {
 module.exports= {
   handlerAllClients,
   handlerOneClient,
+  handlerClientDashboard,
   handlerCreateClient,
   handlerUpdateClient,
 }
