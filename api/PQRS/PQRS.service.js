@@ -1,4 +1,5 @@
 const PQRSModel = require('./PQRS.model');
+const mongoose = require('mongoose');
 
 async function getAllPQRS() {
   return await PQRSModel.find();
@@ -12,4 +13,9 @@ async function getPQRById(id) {
   return await PQRSModel.findById(id);
 }
 
-module.exports = { getAllPQRS, createPQR, getPQRById };
+async function getPQRByPetitioner(petitionerId) {
+  const searchQuery = { petitioner: petitionerId };
+  return await PQRSModel.find(searchQuery);
+}
+
+module.exports = { getAllPQRS, createPQR, getPQRById, getPQRByPetitioner };
