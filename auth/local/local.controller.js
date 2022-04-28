@@ -25,16 +25,31 @@ async function handlerLoginUser(req, res) {
 
     return res.status(200).json(token);
   } catch (error) {
-    return res.status(400).json('Correo o contraseña inválido, intente nuevamente');
+    return res.status(400).json(error);
   }
 }
 
 async function handlerValidateToken(req, res) {
   try {
+    let user;
     const payload = await validateToken(req.body.token);
-    return res.status(200).json(payload);
+    if (payload.error) { return res.status(400).json(payload); }
+    switch(payload.role) {
+      case 'client':
+        user = await getClientByEmail(payload.email);
+        break;
+      case 'professional':
+        user = await getProfessionalByEmail(payload.email);
+        break;
+      case 'admin':
+        user = await getAdminByEmail(payload.email);
+        break;
+      default:
+        return res.status(400).json('Error retrieving user');
+    }
+    return res.status(200).json({...user.dashboardProfile, role: payload.role});
   } catch (error) {
-    return res.status(400).json('Token inválido, intente nuevamente');
+    return res.status(400).json(error);
   }
 };
 

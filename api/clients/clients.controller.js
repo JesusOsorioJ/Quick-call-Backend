@@ -49,8 +49,6 @@ async function handlerCreateClient(req, res) {
 async function handlerUpdateClient(req, res) {
   const { id } = req.params;
   const update = req.body;
-  console.log(id);
-  console.log(update);
 
   try {
     const client = await updateClient(id, update);
