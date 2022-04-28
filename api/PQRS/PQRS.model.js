@@ -9,25 +9,23 @@ const evidence = new mongoose.Schema(
         type: []
       }
   },
-  { _id: false }
+  { _id: false, versionKey: false }
 );
 
 const PQRSSchema = new mongoose.Schema(
   {
-      client: {
-        type: String,
+      petitioner: {
+        type: mongoose.Schema.Types.ObjectId,
         required: true
       },
       date: {
-        type: Date
-      },
-      professional: {
-        type: String,
-        required: true
+        type: Date,
+        default: new Date()
       },
       subject: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
       },
       description: {
         type: String,
@@ -38,8 +36,16 @@ const PQRSSchema = new mongoose.Schema(
         type: evidence,
         default: null
       },
+      status: {
+        type: String,
+        default: 'Pendiente'
+      },
+      actions: {
+        type: [String],
+        default: []
+      }
   },
-  { _id: mongoose.Schema.Types.ObjectId }
+  { versionKey: false }
 );
 
 module.exports = new mongoose.model('PQRS', PQRSSchema);

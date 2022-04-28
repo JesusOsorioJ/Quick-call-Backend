@@ -1,14 +1,27 @@
-const { getAllPQRS, createPQR, getPQRById } = require('./PQRS.service')
+const { getAllPQRS, createPQR, getPQRById, getPQRByPetitioner } = require('./PQRS.service')
 
 async function handlerAllPQRS(req, res) {
   res.json(await getAllPQRS());
 }
 
 async function handlerCreatePQR(req, res) {
-  const newPQR = req.body;
-  const pqr = createPQR(newPQR);
+  try {
+    console.log(req.body);
+    const newPQR = req.body;
+    const pqr = createPQR(newPQR);
+    return res.status(201).json(pqr);
+  } catch (error) {
+    return res.status(400).json(error);
+  }
+}
 
-  return res.status(201).json(pqr);
+async function handlerGetPQRByPetitioner(req, res) {
+  try {
+    const PQR = await getPQRByPetitioner(req.params.id);
+    return res.status(200).json(PQR);
+  } catch (error) {
+    return res.status(500).json({ message: 'Error getting PQR' });
+  }
 }
 
 async function handlerGetPQRById(req, res) {
@@ -20,4 +33,4 @@ async function handlerGetPQRById(req, res) {
   return res.json(pqr);
 }
 
-module.exports= { handlerAllPQRS, handlerGetPQRById, handlerCreatePQR };
+module.exports= { handlerAllPQRS, handlerGetPQRById, handlerGetPQRByPetitioner, handlerCreatePQR };

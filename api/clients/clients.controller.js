@@ -1,7 +1,8 @@
 const clientsModel = require('./clients.model');
 const {
   getAllClients,
-  getOneClient,
+  getClientById,
+  getClientByEmail,
   createClient,
   updateClient
 } = require('./clients.service');
@@ -15,16 +16,24 @@ async function handlerAllClients(req, res) {
   res.json(await getAllClients());
 }
 
-async function handlerOneClient(req, res) {
+async function handlerClientById(req, res) {
+  try {
     const { id } = req.params;
-    const client = await getOneClient(id);
-
-    if (!client) {
-      res.status(404).json({ message: `Client not found with id: ${id}` });
-    } else {
-      res.json(client);
-    }
+    const client = await getClientById(id);
+    return res.status(200).json(client);
+  } catch (error) {
+    return res.status(404).json({ message: `Client not found with id: ${id}` });
   }
+}
+
+async function handlerClientByEmail(req, res) {
+  try {
+    const userDashboard = await getClientByEmail(req.user.email);
+    return res.status(200).json({...userDashboard.dashboardProfile});
+  } catch (error) {
+    return res.status(404).json({ message: 'Information not found' });
+  }
+}
 
 async function handlerCreateClient(req, res) {
   const newClient = req.body;
@@ -33,7 +42,7 @@ async function handlerCreateClient(req, res) {
     emailClientAccountCreated(client);
     return res.status(201).json(client);
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 }
 
@@ -46,20 +55,17 @@ async function handlerUpdateClient(req, res) {
   try {
     const client = await updateClient(id, update);
     emailAccountUpdated(client.email);
-    if(!client) {
-      return res.status(404).json({ message: `Client not found with id: ${id}` });
-    }
-    res.json(client);
-
+    return res.status(200).json(client);
   } catch (error) {
     console.log(error);
-    res.status(404).json({ message: `Client not found with id: ${id}` });
+    return res.status(404).json({ message: `Client not found with id: ${id}` });
   }
 }
 
 module.exports= {
   handlerAllClients,
-  handlerOneClient,
+  handlerClientById,
+  handlerClientByEmail,
   handlerCreateClient,
   handlerUpdateClient,
 }

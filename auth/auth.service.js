@@ -70,7 +70,6 @@ function isAuthenticated() {
       if (!user) {
         return res.status(401).json('user').end();
       }
-
       // 7. agregar ese usuario al req.user
       req.user = {...user._doc, role: payload.role};
       // 8. siga al siguiente middleware next()
@@ -86,7 +85,26 @@ function hasRole(allowedRoles = []) {
       async (req, res, next) => {
         const { role } = req.user;
         if (!allowedRoles.includes(role)) {
-          return res.status(403).json('Unauthorized access').end();
+          return res.status(403).json('Unauthorized access HAS ROLE').end();
+        }
+        next();
+        return null;
+      }
+    )
+}
+
+function isSelf() {
+  return compose()
+    .use(
+      async (req, res, next) => {
+        const { user } = req;
+        const { id } = req.params;
+        if (user.role === 'admin') {
+          next();
+          return null;
+        }
+        if (user._id.toString() !== id) {
+          return res.status(403).json('Unauthorized access IS SELF').end();
         }
         next();
         return null;
@@ -95,7 +113,9 @@ function hasRole(allowedRoles = []) {
 }
 
 module.exports = {
+  signToken,
+  validateToken,
   isAuthenticated,
   hasRole,
-  signToken,
+  isSelf,
 };

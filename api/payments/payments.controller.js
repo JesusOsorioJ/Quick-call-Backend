@@ -5,8 +5,6 @@ const { updateClient } = require('../clients/clients.service');
 
 async function handlerPayment(req, res) {
   const { paymentMethod, amount } = req.body;
-  console.log('line 8: ', req.user);
-  console.log('line 9: ', req.user?.payment?.customerId);
 
   try {
     let customer;

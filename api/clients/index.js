@@ -1,8 +1,9 @@
 const Router = require('express');
-const { hasRole } = require('../../auth/auth.service');
+const { hasRole, isSelf } = require('../../auth/auth.service');
 const {
     handlerAllClients,
-    handlerOneClient,
+    handlerClientById,
+    handlerClientByEmail,
     handlerCreateClient,
     handlerUpdateClient
 } = require('./clients.controller');
@@ -10,8 +11,9 @@ const {
 const router = Router();
 
 router.get('/', handlerAllClients); // hasRole('admin')
-router.get('/:id', handlerOneClient); // hasRole('admin', 'client)
+router.get('/dashboard/profile', hasRole(['client']), handlerClientByEmail);
+router.get('/:id', hasRole(['admin', 'client']), handlerClientById);
 router.post('/', handlerCreateClient);
-router.patch('/:id', hasRole(['admin', 'client']), handlerUpdateClient); // hasRole(['admin', 'client'])
+router.patch('/:id', hasRole(['admin', 'client']), isSelf(), handlerUpdateClient);
 
 module.exports = router;
