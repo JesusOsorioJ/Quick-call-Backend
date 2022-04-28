@@ -9,7 +9,7 @@ const evidence = new mongoose.Schema(
         type: []
       }
   },
-  { _id: false }
+  { _id: false, versionKey: false }
 );
 
 const PQRSSchema = new mongoose.Schema(
@@ -44,7 +44,8 @@ const PQRSSchema = new mongoose.Schema(
         type: [String],
         default: []
       }
-  }
+  },
+  { versionKey: false }
 );
 
 module.exports = new mongoose.model('PQRS', PQRSSchema);
