@@ -5,10 +5,14 @@ async function handlerAllPQRS(req, res) {
 }
 
 async function handlerCreatePQR(req, res) {
-  const newPQR = req.body;
-  const pqr = createPQR(newPQR);
-
-  return res.status(201).json(pqr);
+  try {
+    console.log(req.body);
+    const newPQR = req.body;
+    const pqr = createPQR(newPQR);
+    return res.status(201).json(pqr);
+  } catch (error) {
+    return res.status(400).json(error);
+  }
 }
 
 async function handlerGetPQRByPetitioner(req, res) {

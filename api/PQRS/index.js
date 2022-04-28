@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const { isAuthenticated, isSelf } = require('../../auth/auth.service')
+const { isAuthenticated, hasRole, isSelf } = require('../../auth/auth.service')
 const {
     handlerAllPQRS,
     handlerGetPQRById,
@@ -12,6 +12,6 @@ const router = Router();
 router.get('/', handlerAllPQRS);
 router.get('/:id', handlerGetPQRById);
 router.get('/petitioner/:id', isAuthenticated(), isSelf(), handlerGetPQRByPetitioner);
-router.post('/', handlerCreatePQR);
+router.post('/', hasRole(['client', 'professional']), handlerCreatePQR);
 
 module.exports = router;

@@ -6,7 +6,11 @@ async function getAllPQRS() {
 }
 
 async function createPQR(pqr) {
-  return await PQRSModel.create(pqr);
+  try {
+    return await PQRSModel.create(pqr);
+  } catch (error) {
+    return new Error(error);
+  }
 }
 
 async function getPQRById(id) {
@@ -14,8 +18,12 @@ async function getPQRById(id) {
 }
 
 async function getPQRByPetitioner(petitionerId) {
-  const searchQuery = { petitioner: petitionerId };
-  return await PQRSModel.find(searchQuery);
+  try {
+    const searchQuery = { petitioner: petitionerId };
+    return await PQRSModel.find(searchQuery);
+  } catch (error) {
+    return new Error('Error getting PQR');
+  }
 }
 
 module.exports = { getAllPQRS, createPQR, getPQRById, getPQRByPetitioner };
