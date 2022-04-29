@@ -63,20 +63,16 @@ const socialSecurity = new mongoose.Schema (
 
 const availability = new mongoose.Schema(
     {
-        schedule: {
-            type: String,
-            required: false
-        },
         startTime: {
-            type: String,
+            type: Date,
             default: "00:00",
         },
         endTime: {
-            type: String,
+            type: Date,
             default: "00:00",
         },
         fullAvailability: {
-            type: String,
+            type: Boolean,
             required: false
         }
     },
@@ -188,5 +184,32 @@ professionalSchema.virtual('profile').get(function () {
         email
     };
 });
+
+professionalSchema.virtual('dashboardProfile').get(function () {
+    const {
+        id,
+        name,
+        email,
+        phoneNumber,
+        city,
+        myDescription,
+        specialties,
+        image,
+        socialSecurity,
+        availability,
+    } = this;
+    return {
+        id,
+        name,
+        email,
+        phoneNumber,
+        city,
+        myDescription,
+        specialties,
+        image,
+        socialSecurity,
+        availability,
+    };
+})
 
 module.exports = mongoose.model('professional', professionalSchema);

@@ -12,6 +12,10 @@ const JobsSchema = new mongoose.Schema(
         ref: 'professionals',
         required: true
       },
+      payment :{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'payments',
+      },
       startDate: {
         type: Date,
         default: Date()

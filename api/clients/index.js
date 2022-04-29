@@ -10,8 +10,7 @@ const {
 
 const router = Router();
 
-router.get('/', handlerAllClients); // hasRole('admin')
-router.get('/dashboard/profile', hasRole(['client']), handlerClientByEmail);
+router.get('/', handlerAllClients);
 router.get('/:id', hasRole(['admin', 'client']), handlerClientById);
 router.post('/', handlerCreateClient);
 router.patch('/:id', hasRole(['admin', 'client']), isSelf(), handlerUpdateClient);

@@ -48,7 +48,28 @@ function emailAccountUpdated(email) {
     });
 }
 
+function emailPQRCreated(data) {
+  const { email, name } = data;
+  const msg = {
+    to: email,
+    from: baseNoReply,
+    dynamic_template_data: {
+      name: name.split(' ')[0],
+    },
+    template_id: 'd-0cf7b9d1377143a39d4d7ac86fed236d' // Cambiar
+  }
+
+  sgMail.send(msg)
+    .then(() => {
+      console.log('🚀 ~ file: sendgrid.js ~ line 32 ~ emailPQRCreated ~ email sent');
+    })
+    .catch((error) => {
+      console.log('🚀 ~ file: sendgrid.js ~ line 36 ~ emailPQRCreated ~ error', error);
+    });
+}
+
 module.exports = {
   emailClientAccountCreated,
   emailAccountUpdated,
+  emailPQRCreated,
 }
