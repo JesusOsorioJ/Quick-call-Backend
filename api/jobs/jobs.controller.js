@@ -29,7 +29,6 @@ async function handlerGetJobById(req, res) {
 }
 
 async function handlerGetJobsByUserId(req, res) {
-  console.log(req.user);
   try {
     const userId = req.params.id;
     const role = req.user?.role;

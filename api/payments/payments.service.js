@@ -53,8 +53,12 @@ async function makePayment({ paymentMethod, amount, customer }) {
 }
 
 //Mongoose
-function createPayment(payment) {
-  return Payment.create(payment);
+async function createPayment(payment) {
+  return await Payment.create(payment);
+}
+
+async function getPaymentsByUserId(paymentId) { // Possible rename to handlerGetPaymentsById
+  return await Payment.findById(paymentId);
 }
 
 module.exports = {
@@ -62,4 +66,5 @@ module.exports = {
   createCustomer,
   createPayment,
   retrieveCustomer,
+  getPaymentsByUserId,
 };

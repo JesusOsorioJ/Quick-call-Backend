@@ -1,5 +1,5 @@
 const {
-  makePayment, createPayment, createCustomer, retrieveCustomer,
+  makePayment, createPayment, createCustomer, retrieveCustomer, getPaymentsByUserId
 } = require('./payments.service');
 const { updateClient } = require('../clients/clients.service');
 
@@ -47,6 +47,20 @@ async function handlerPayment(req, res) {
   }
 }
 
+async function handlerGetPaymentsByUserId(req, res) {
+  const userId = req.params.id;
+  const paymentId = req.params.paymentId;
+  const role = req.user.role;
+  try {
+    const payment = await getPaymentsByUserId(paymentId);
+    return res.status(200).json(payment);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+
+}
+
 module.exports = {
   handlerPayment,
+  handlerGetPaymentsByUserId,
 };
