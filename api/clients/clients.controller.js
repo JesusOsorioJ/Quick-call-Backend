@@ -28,8 +28,8 @@ async function handlerClientById(req, res) {
 
 async function handlerClientByEmail(req, res) {
   try {
-    const userDashboard = await getClientByEmail(req.user.email);
-    return res.status(200).json({...userDashboard.dashboardProfile});
+    const client = await getClientByEmail(req.user.email);
+    return res.status(200).json(client);
   } catch (error) {
     return res.status(404).json({ message: 'Information not found' });
   }

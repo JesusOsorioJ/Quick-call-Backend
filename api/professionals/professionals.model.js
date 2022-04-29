@@ -187,6 +187,7 @@ professionalSchema.virtual('profile').get(function () {
 
 professionalSchema.virtual('dashboardProfile').get(function () {
     const {
+        id,
         name,
         email,
         phoneNumber,
@@ -198,6 +199,7 @@ professionalSchema.virtual('dashboardProfile').get(function () {
         availability,
     } = this;
     return {
+        id,
         name,
         email,
         phoneNumber,
