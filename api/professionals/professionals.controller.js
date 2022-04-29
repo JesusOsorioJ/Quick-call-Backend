@@ -1,6 +1,3 @@
-const fs = require('fs');
-const cloudinary = require('cloudinary').v2;
-
 const {
   allProfessionals,
   oneProfessional,
@@ -38,28 +35,6 @@ async function handlerOneProfessional(req, res) {
   }
 }
 
-
-async function uploadImage(image) {
-  try {
-    const result = await cloudinary.uploader.upload(image);
-    return result;
-  } catch (error) {
-    console.log(error);
-  } finally{
-    fs.unlinkSync(image);
-  }
-}
-
-async function handlerCreateImage(req, res) {
-  try {
-    const { file } = req;
-    const result  = await uploadImage(file.path);
-    return res.status(200).json(result);
-  } catch (error) {
-    return res.status(500).json(error);
-  }
-}
-
 async function handlerCreateProfessional(req, res) {
   try {
     const newProfessional = req.body;
@@ -87,5 +62,4 @@ module.exports = {
   handlerOneProfessional,
   handlerCreateProfessional,
   handlerEditProfessional,
-  handlerCreateImage,
 };
