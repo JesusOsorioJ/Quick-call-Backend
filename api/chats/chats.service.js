@@ -13,7 +13,9 @@ async function createChat(chat) {
 }
 
 async function updateChat(chatId, chat) {
-    return await chatsModel.findByIdAndUpdate(chatId, chat);
+    return await chatsModel.findOneAndUpdate({ '_id': chatId }, chat, {
+        new: true,
+    });
 }
 
 async function deleteChat(chatId) {

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const message = new mongoose.Schema({
     text: String,
-    user: mongoose.Types.ObjectId,
+    user: String,
 }, { timestamps: true, _id: false, versionKey: false });
 
 const ChatSchema = new mongoose.Schema({

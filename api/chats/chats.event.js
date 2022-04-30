@@ -1,19 +1,19 @@
 const { socket } = require('../../config/websocket');
 
-function eventGetAllMessages(messages) {
+function eventGetAllMessages(id, messages) {
     socket.io.emit(`${id}:getAll`, messages);
 }
 
-function eventCreateMessage(message) {
-    socket.io.emit(`${id}:create`, message);
+function eventCreateMessage(id, message) {
+    socket.io.emit(`chat:create`, message);
 }
 
-function eventDeleteMessage(message) {
-    socket.io.emit(`${id}:delete`, messageId);
+function eventDeleteMessage(id, message) {
+    socket.io.emit(`chat:delete`, message);
 }
 
-function eventUpdateMessage(message) {
-    socket.io.emit(`${id}:update`, message);
+function eventUpdateMessage(id, message) {
+    socket.io.emit(`chat:update`, message);
 }
 
 module.exports = {

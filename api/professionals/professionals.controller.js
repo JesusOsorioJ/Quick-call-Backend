@@ -16,7 +16,6 @@ async function handlerAllProfessionals(req, res) {
         }
       };
     }
-    console.log(req.query);
     const professional = await allProfessionals(req.query);
     return res.status(200).json(professional);
   } catch (error) {

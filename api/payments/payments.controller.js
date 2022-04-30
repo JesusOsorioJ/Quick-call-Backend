@@ -15,8 +15,6 @@ async function handlerPayment(req, res) {
       customer = await createCustomer(req.user, paymentMethod);
     }
 
-    console.log(customer);
-
     // Update user with customer info
     const userToUpdate = {
       payment: {
@@ -42,7 +40,6 @@ async function handlerPayment(req, res) {
     await createPayment(registeredPayment);
     res.status(201).json(payment);
   } catch (error) {
-    console.log('error', error);
     res.status(500).json(error);
   }
 }

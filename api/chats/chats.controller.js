@@ -12,6 +12,7 @@ const {
     eventDeleteMessage,
     eventUpdateMessage,
 } = require('./chats.event');
+const { socket } = require('../../config/websocket');
 
 async function handlerAllChats(req, res) {
     try {
@@ -24,7 +25,7 @@ async function handlerAllChats(req, res) {
 
 async function handlerGetChatById(req, res) {
     try {
-        const chatId = req.params.chatId;
+        const chatId = req.params.id;
         const chat = await getChat(chatId);
         return res.status(200).json(chat);
     } catch (error) {
@@ -47,9 +48,10 @@ async function handlerUpdateChat(req, res) {
         const update = req.body;
         const chatId = req.params.id;
         const updatedChat = await updateChat(chatId, update);
+        eventCreateMessage(JSON.stringify(updatedChat.jobId), updatedChat);
         return res.status(200).json(updatedChat);
     } catch (error) {
-        return res.status(404).json(error);
+        return res.status(404).json(error.message);
     }
 }
 
