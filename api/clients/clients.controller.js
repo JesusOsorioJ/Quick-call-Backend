@@ -52,7 +52,7 @@ async function handlerUpdateClient(req, res) {
 
   try {
     const client = await updateClient(id, update);
-    emailAccountUpdated(client.email);
+    // emailAccountUpdated(client.email);
     return res.status(200).json(client);
   } catch (error) {
     console.log(error);

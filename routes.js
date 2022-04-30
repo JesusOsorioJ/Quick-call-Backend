@@ -7,6 +7,7 @@ const jobs = require('./api/jobs');
 const PQRS = require('./api/PQRS');
 const categories = require('./api/categories');
 const payments = require('./api/payments');
+const upload = require('./api/upload');
 
 
 function routes(app){
@@ -19,6 +20,7 @@ function routes(app){
     app.use('/api/PQRS', PQRS)
     app.use('/api/categories', categories)
     app.use('/api/payments', payments)
+    app.use('/api/upload', upload)
 }
 
 module.exports = routes

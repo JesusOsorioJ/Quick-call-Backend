@@ -116,7 +116,6 @@ const professionalSchema = new mongoose.Schema(
         },
         image: {
             type: image,
-            default: null
         },
         socialSecurity: {
             type: socialSecurity,

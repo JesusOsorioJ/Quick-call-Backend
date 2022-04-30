@@ -15,24 +15,6 @@ const location = new mongoose.Schema(
     { _id: false }
 );
 
-// const paymentSchema = new mongoose.Schema(
-//     {
-//         cardNumber: {
-//             type: Number,
-//             required: true
-//         },
-//         expDate: {
-//             type: String,
-//             required: true
-//         },
-//         cvv: {
-//             type: Number,
-//             required: true
-//         }
-//     },
-//     { _id: false }
-// );
-
 const ClientSchema = new mongoose.Schema(
     {
         name: {
@@ -64,7 +46,7 @@ const ClientSchema = new mongoose.Schema(
         },
         profilePicture: {
             type: String,
-            default: "avatar.png"
+            default: "https://res.cloudinary.com/dt7ptke8d/image/upload/v1651275873/user-icon.svg"
         },
         payment: {
             type: Object,
@@ -136,7 +118,7 @@ ClientSchema.virtual('profile').get(function () {
 
 ClientSchema.virtual('dashboardProfile').get(function () {
     const {
-        id,
+        _id,
         name,
         email,
         phoneNumber,
@@ -147,7 +129,7 @@ ClientSchema.virtual('dashboardProfile').get(function () {
     } = this;
 
     return {
-        id,
+        _id,
         name,
         email,
         phoneNumber,
