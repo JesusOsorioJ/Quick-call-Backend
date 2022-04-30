@@ -34,6 +34,7 @@ async function validateToken(token) {
 }
 
 function isAuthenticated() {
+  console.log("ajbbvfsjbvjdbvjkdfbvfvdk");
   return compose().use(
     async (req, res, next) => {
       // 1. req.headers -> authorization
