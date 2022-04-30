@@ -6,6 +6,13 @@ const {
     deleteChat,
 } = require('./chats.service');
 
+const {
+    eventGetAllMessages,
+    eventCreateMessage,
+    eventDeleteMessage,
+    eventUpdateMessage,
+} = require('./chats.event');
+
 async function handlerAllChats(req, res) {
     try {
         const chats = await getAllChats();
