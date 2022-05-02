@@ -5,7 +5,7 @@ const { handlerAllJobs, handlerCreateJob, handlerGetJobById, handlerGetJobsByUse
 const router = Router();
 
 router.get('/', handlerAllJobs);
-router.get('/:id', handlerGetJobById);
+router.get('/id/:id', handlerGetJobById);
 router.get('/user/:id', isAuthenticated(), isSelf(), handlerGetJobsByUserId);
 router.post('/', handlerCreateJob);
 
