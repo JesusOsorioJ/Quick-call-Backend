@@ -16,12 +16,10 @@ const JobsSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: 'payments',
       },
-      startDate: {
-        type: Date,
-        default: Date()
-      },
-      completionDate: {
-        type: Date
+      title: {
+        type: String,
+        required: true,
+        trim: true
       },
       objective: {
         type: String,
@@ -29,12 +27,21 @@ const JobsSchema = new mongoose.Schema(
         trim: true
       },
       conditions: {
-        type: [String],
-        required: true
+        type: [{}],
+      },
+      evidence: {
+        type: [{}],
       },
       status: {
         type: String,
         default: 'Oferta'
+      },
+      startDate: {
+        type: Date,
+        default: Date()
+      },
+      completionDate: {
+        type: Date
       },
       clientFeedback: {
         type: String
