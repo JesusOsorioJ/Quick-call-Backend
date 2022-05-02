@@ -7,11 +7,12 @@ const routes = require('./routes');
 const { connectSocket } = require('./config/websocket');
 
 const app = express();
-const server = http.Server(app);
+// const server = http.Server(app);
 
 connectDB();
 configExpress(app);
-connectSocket(server)
+// connectSocket(server)
 routes(app);
 
-module.exports = { app, server };
+// module.exports = { app, server };
+module.exports = { app };

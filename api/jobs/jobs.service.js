@@ -13,6 +13,7 @@ async function getJobById(id) {
 }
 
 async function getJobsByUserId(userId, role) {
+  console.log({ [role]: userId });
   return await jobsModel.find({ [role]: userId });
 }
 

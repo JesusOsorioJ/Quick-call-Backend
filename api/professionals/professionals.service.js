@@ -4,7 +4,7 @@ async function allProfessionals(query) {
   return await professionals.find(query);
 }
 
-async function oneProfessional(id){
+async function getProfessionalById(id){
   const professional = await professionals.findById(id);
   return professional;
 }
@@ -23,7 +23,7 @@ async function editProfessional (id, change) {
 
 module.exports={
   allProfessionals,
-  oneProfessional,
+  getProfessionalById,
   getProfessionalByEmail,
   createProfessional,
   editProfessional,

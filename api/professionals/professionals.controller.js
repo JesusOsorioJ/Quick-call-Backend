@@ -1,6 +1,6 @@
 const {
   allProfessionals,
-  oneProfessional,
+  getProfessionalById,
   createProfessional,
   editProfessional,
 } = require("./professionals.service");
@@ -24,10 +24,10 @@ async function handlerAllProfessionals(req, res) {
 }
 
 
-async function handlerOneProfessional(req, res) {
+async function handlergetProfessionalById(req, res) {
   const id = req.params.id;
   try{
-  const professional = await oneProfessional(id);
+  const professional = await getProfessionalById(id);
   return res.status(200).json(professional);
   }catch(error) {
   return  res.status(404).json({ message: `Professional not found with id: ${id}` });
@@ -38,6 +38,7 @@ async function handlerCreateProfessional(req, res) {
   try {
     const newProfessional = req.body;
     const profesional = await createProfessional(newProfessional);
+    // Email for account creation
     return res.status(201).json(profesional);
   } catch (error) {
     return res.status(500).json(error);
@@ -58,7 +59,7 @@ async function handlerEditProfessional(req, res) {
 
 module.exports = {
   handlerAllProfessionals,
-  handlerOneProfessional,
+  handlergetProfessionalById,
   handlerCreateProfessional,
   handlerEditProfessional,
 };
