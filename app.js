@@ -11,7 +11,7 @@ const server = http.Server(app);
 
 connectDB();
 configExpress(app);
-connectSocket(server)
+connectSocket(server);
 routes(app);
 
 module.exports = { app, server };
