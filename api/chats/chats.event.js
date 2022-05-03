@@ -5,15 +5,15 @@ function eventGetAllMessages(id, messages) {
 }
 
 function eventCreateMessage(id, message) {
-    socket.io.emit(`chat:create`, message);
+    socket.io.emit(`${id}:create`, message);
 }
 
 function eventDeleteMessage(id, message) {
-    socket.io.emit(`chat:delete`, message);
+    socket.io.emit(`${id}:delete`, message);
 }
 
 function eventUpdateMessage(id, message) {
-    socket.io.emit(`chat:update`, message);
+    socket.io.emit(`${id}:update`, message);
 }
 
 module.exports = {

@@ -48,7 +48,7 @@ async function handlerUpdateChat(req, res) {
         const update = req.body;
         const chatId = req.params.id;
         const updatedChat = await updateChat(chatId, update);
-        eventCreateMessage(JSON.stringify(updatedChat.jobId), updatedChat);
+        eventCreateMessage(chatId, updatedChat);
         return res.status(200).json(updatedChat);
     } catch (error) {
         return res.status(404).json(error.message);
