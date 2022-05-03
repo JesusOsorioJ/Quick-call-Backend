@@ -1,4 +1,7 @@
 const { getAllJobs, createJob, getJobById, getJobsByUserId } = require('./jobs.service')
+const { getClientById } = require('../clients/clients.service')
+const { getProfessionalById } = require('../professionals/professionals.service');
+const { emailJobCreatedClient, emailJobCreatedProfessional } = require('../../utils/sendgrid');
 
 async function handlerAllJobs(req, res) {
   try {
@@ -11,10 +14,14 @@ async function handlerAllJobs(req, res) {
 async function handlerCreateJob(req, res) {
   try {
     const newJob = req.body;
-    const job = createJob(newJob);
+    const job = await createJob(newJob);
+    const client = await getClientById(job.client)
+    const professional = await getProfessionalById(job.professional)
+    emailJobCreatedClient(client); // Edit template
+    emailJobCreatedProfessional(professional); // Edit template
     return res.status(201).json(job);
   } catch (error) {
-    return res.status(500).json(error);
+    return res.status(500).json(error.message);
   }
 }
 

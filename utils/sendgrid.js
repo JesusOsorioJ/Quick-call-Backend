@@ -68,8 +68,51 @@ function emailPQRCreated(data) {
     });
 }
 
+function emailJobCreatedProfessional(data) {
+  const { email, name, objective } = data;
+  const msg = {
+    to: email,
+    from: baseNoReply,
+    dynamic_template_data: {
+      name: name.split(' ')[0],
+      objective: objective,
+    },
+    template_id: 'd-0f37715937c748e4a06b819da8bf7ae4'
+  }
+
+  sgMail.send(msg)
+    .then(() => {
+      console.log('🚀 ~ file: sendgrid.js ~ line 32 ~ emailJobCreatedProfessional ~ email sent');
+    })
+    .catch((error) => {
+      console.log('🚀 ~ file: sendgrid.js ~ line 36 ~ emailJobCreatedProfessional ~ error', error);
+    });
+}
+
+function emailJobCreatedClient(data) {
+  const { email, name } = data;
+  const msg = {
+    to: email,
+    from: baseNoReply,
+    dynamic_template_data: {
+      name: name.split(' ')[0],
+    },
+    template_id: 'd-0cf7b9d1377143a39d4d7ac86fed236d' // Cambiar
+  }
+
+  sgMail.send(msg)
+    .then(() => {
+      console.log('🚀 ~ file: sendgrid.js ~ line 32 ~ emailPQRCreated ~ email sent');
+    })
+    .catch((error) => {
+      console.log('🚀 ~ file: sendgrid.js ~ line 36 ~ emailPQRCreated ~ error', error);
+    });
+}
+
 module.exports = {
   emailClientAccountCreated,
   emailAccountUpdated,
   emailPQRCreated,
+  emailJobCreatedProfessional,
+  emailJobCreatedClient,
 }

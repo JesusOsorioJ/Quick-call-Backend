@@ -6,7 +6,6 @@ async function handlerAllPQRS(req, res) {
 
 async function handlerCreatePQR(req, res) {
   try {
-    console.log(req.body);
     const newPQR = req.body;
     const pqr = createPQR(newPQR);
     return res.status(201).json(pqr);
