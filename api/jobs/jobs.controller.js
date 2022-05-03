@@ -1,4 +1,9 @@
-const { getAllJobs, createJob, getJobById, getJobsByUserId } = require('./jobs.service')
+const {
+  getAllJobs,
+  createJob,
+  getJobById,
+  getJobsByUserId,
+  updateJobsById } = require('./jobs.service')
 const { getClientById } = require('../clients/clients.service')
 const { getProfessionalById } = require('../professionals/professionals.service');
 const { emailJobCreatedClient, emailJobCreatedProfessional } = require('../../utils/sendgrid');
@@ -17,8 +22,8 @@ async function handlerCreateJob(req, res) {
     const job = await createJob(newJob);
     const client = await getClientById(job.client)
     const professional = await getProfessionalById(job.professional)
-    emailJobCreatedClient(client); // Edit template
-    emailJobCreatedProfessional(professional); // Edit template
+    // emailJobCreatedClient(client); // Edit template
+    // emailJobCreatedProfessional(professional); // Edit template
     return res.status(201).json(job);
   } catch (error) {
     return res.status(500).json(error.message);
@@ -46,4 +51,21 @@ async function handlerGetJobsByUserId(req, res) {
   }
 }
 
-module.exports= { handlerAllJobs, handlerCreateJob, handlerGetJobById, handlerGetJobsByUserId };
+async function  handlerUpdateJob(req, res) {
+  const editJob = req.body;
+  const {id} = req.params
+
+  try {
+    const jobs = await updateJobsById(id, editJob);
+    return res.status(200).json(jobs);
+  } catch (error) {
+    return res.status(404).json(error);
+  }
+}
+
+module.exports= {
+  handlerAllJobs,
+  handlerCreateJob,
+  handlerGetJobById,
+  handlerGetJobsByUserId,
+  handlerUpdateJob };

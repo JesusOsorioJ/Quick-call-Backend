@@ -26,11 +26,17 @@ const JobsSchema = new mongoose.Schema(
         required: true,
         trim: true
       },
-      conditions: {
-        type: [{}],
+      conditionsClients: {
+        type: [],
       },
-      evidence: {
-        type: [{}],
+      evidenceClients: {
+        type: [],
+      },
+      conditionsProfessionals: {
+        type: [],
+      },
+      evidenceProfessionals: {
+        type: [],
       },
       status: {
         type: String,
