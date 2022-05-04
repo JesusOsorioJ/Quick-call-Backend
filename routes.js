@@ -9,6 +9,7 @@ const categories = require('./api/categories');
 const payments = require('./api/payments');
 const upload = require('./api/upload');
 const chats = require('./api/chats');
+const download = require('./api/download');
 
 
 function routes(app){
@@ -23,6 +24,7 @@ function routes(app){
     app.use('/api/payments', payments)
     app.use('/api/upload', upload)
     app.use('/api/chats', chats)
+    app.use('/api/download', download)
 }
 
 module.exports = routes
