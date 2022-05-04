@@ -89,23 +89,24 @@ function emailJobCreatedProfessional(data) {
     });
 }
 
-function emailJobCreatedClient(data) {
-  const { email, name } = data;
+function emailJobCreatedClient(client, title) {
+  const { email, name } = client;
   const msg = {
     to: email,
     from: baseNoReply,
     dynamic_template_data: {
       name: name.split(' ')[0],
+      title: title,
     },
-    template_id: 'd-0cf7b9d1377143a39d4d7ac86fed236d' // Cambiar
+    template_id: 'd-de5f8e530fca4c48a9042d9b56550642'
   }
 
   sgMail.send(msg)
     .then(() => {
-      console.log('🚀 ~ file: sendgrid.js ~ line 32 ~ emailPQRCreated ~ email sent');
+      console.log('🚀 ~ file: sendgrid.js ~ line 32 ~ emailJobCreatedClient ~ email sent');
     })
     .catch((error) => {
-      console.log('🚀 ~ file: sendgrid.js ~ line 36 ~ emailPQRCreated ~ error', error);
+      console.log('🚀 ~ file: sendgrid.js ~ line 36 ~ emailJobCreatedClient ~ error', error);
     });
 }
 

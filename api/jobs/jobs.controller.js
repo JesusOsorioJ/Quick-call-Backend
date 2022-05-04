@@ -22,8 +22,8 @@ async function handlerCreateJob(req, res) {
     const job = await createJob(newJob);
     const client = await getClientById(job.client)
     const professional = await getProfessionalById(job.professional)
-    // emailJobCreatedClient(client); // Edit template
-    // emailJobCreatedProfessional(professional); // Edit template
+    // emailJobCreatedClient(client, job.title);
+    // emailJobCreatedProfessional(professional);
     return res.status(201).json(job);
   } catch (error) {
     return res.status(500).json(error.message);
@@ -34,7 +34,7 @@ async function handlerGetJobById(req, res) {
   try {
     const id = req.params.id;
     const job = await getJobById(id);
-    return res.status(404).json(job);
+    return res.status(200).json(job);
   } catch (error) {
     return res.status(404).json(error);
   }
@@ -51,12 +51,28 @@ async function handlerGetJobsByUserId(req, res) {
   }
 }
 
-async function  handlerUpdateJob(req, res) {
+async function handlerUpdateJob(req, res) {
   const editJob = req.body;
   const {id} = req.params
 
   try {
     const jobs = await updateJobsById(id, editJob);
+    switch (editJob.status) {
+      case 'Pendiente pago':
+        console.log('acá es pendiente pago');
+        break;
+      case 'En progreso':
+        console.log('acá es en progreso');
+        break;
+      case 'Finalizado':
+        console.log('acá es finalizado');
+        break;
+      case 'Cerrado':
+        console.log('acá es cerrado');
+        break;
+      default:
+        console.log('acá es default');
+    }
     return res.status(200).json(jobs);
   } catch (error) {
     return res.status(404).json(error);

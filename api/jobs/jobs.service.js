@@ -9,11 +9,10 @@ async function createJob(job) {
 }
 
 async function getJobById(id) {
-  return await jobsModel.findById(id);
+  return await jobsModel.findById(id).sort({ startDate: 'desc' }).exec(); // Not working
 }
 
 async function getJobsByUserId(userId, role) {
-  console.log({ [role]: userId });
   return await jobsModel.find({ [role]: userId });
 }
 async function updateJobsById (id, change) {

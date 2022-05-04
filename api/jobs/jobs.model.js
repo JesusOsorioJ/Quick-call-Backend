@@ -12,6 +12,10 @@ const JobsSchema = new mongoose.Schema(
         ref: 'professionals',
         required: true
       },
+      amount: {
+        type: Number,
+        default: 0,
+      },
       payment :{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'payments',
@@ -56,4 +60,4 @@ const JobsSchema = new mongoose.Schema(
   { versionKey: false }
 );
 
-module.exports = new mongoose.model('jobs', JobsSchema);
+module.exports = mongoose.model('jobs', JobsSchema);

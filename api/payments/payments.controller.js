@@ -2,9 +2,10 @@ const {
   makePayment, createPayment, createCustomer, retrieveCustomer, getPaymentsByUserId
 } = require('./payments.service');
 const { updateClient } = require('../clients/clients.service');
+const { updateJobsById } = require('../jobs/jobs.service');
 
 async function handlerPayment(req, res) {
-  const { paymentMethod, amount } = req.body;
+  const { paymentMethod, amount, description, jobId } = req.body;
 
   try {
     let customer;
@@ -27,7 +28,7 @@ async function handlerPayment(req, res) {
     };
 
     await updateClient(req.user._id, userToUpdate);
-    const payment = await makePayment({ paymentMethod, amount, customer });
+    const payment = await makePayment({ paymentMethod, amount, customer, description });
 
     // save payment to db
     const registeredPayment = {
@@ -37,17 +38,16 @@ async function handlerPayment(req, res) {
       currency: payment.currency,
       userId: req.user._id,
     };
-    await createPayment(registeredPayment);
+    const { _id } = await createPayment(registeredPayment);
+    await updateJobsById(jobId, { payment: _id, status: 'En progreso' });
     res.status(201).json(payment);
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json(error.message);
   }
 }
 
 async function handlerGetPaymentsByUserId(req, res) {
-  const userId = req.params.id;
   const paymentId = req.params.paymentId;
-  const role = req.user.role;
   try {
     const payment = await getPaymentsByUserId(paymentId);
     return res.status(200).json(payment);
