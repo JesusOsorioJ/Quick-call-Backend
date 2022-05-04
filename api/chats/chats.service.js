@@ -5,7 +5,8 @@ async function getAllChats() {
 }
 
 async function getChat(chatId) {
-    return await chatsModel.findById(chatId);
+    console.log('chatid', chatId)
+    return await chatsModel.findOne({"jobId":chatId});
 }
 
 async function createChat(chat) {
@@ -13,7 +14,7 @@ async function createChat(chat) {
 }
 
 async function updateChat(chatId, chat) {
-    return await chatsModel.findOneAndUpdate({ '_id': chatId }, chat, {
+    return await chatsModel.findOneAndUpdate({ jobId:chatId }, chat, {
         new: true,
     });
 }
