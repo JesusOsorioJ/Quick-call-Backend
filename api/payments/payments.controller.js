@@ -2,9 +2,12 @@ const {
   makePayment, createPayment, createCustomer, retrieveCustomer, getPaymentsByUserId
 } = require('./payments.service');
 const { updateClient } = require('../clients/clients.service');
+const { getProfessionalById } = require('../professionals/professionals.service');
+const { updateJobsById } = require('../jobs/jobs.service');
+const { emailJobPaidProfessional } = require('../../utils/sendgrid');
 
 async function handlerPayment(req, res) {
-  const { paymentMethod, amount } = req.body;
+  const { paymentMethod, amount, description, jobId } = req.body;
 
   try {
     let customer;
@@ -14,8 +17,6 @@ async function handlerPayment(req, res) {
       // create customer
       customer = await createCustomer(req.user, paymentMethod);
     }
-
-    console.log(customer);
 
     // Update user with customer info
     const userToUpdate = {
@@ -29,7 +30,7 @@ async function handlerPayment(req, res) {
     };
 
     await updateClient(req.user._id, userToUpdate);
-    const payment = await makePayment({ paymentMethod, amount, customer });
+    const payment = await makePayment({ paymentMethod, amount, customer, description });
 
     // save payment to db
     const registeredPayment = {
@@ -39,18 +40,20 @@ async function handlerPayment(req, res) {
       currency: payment.currency,
       userId: req.user._id,
     };
-    await createPayment(registeredPayment);
+    const { _id } = await createPayment(registeredPayment);
+    const job = await updateJobsById(jobId, { payment: _id, status: 'En progreso' });
+
+    const professional = await getProfessionalById(job.professional);
+    await emailJobPaidProfessional(professional, job);
+
     res.status(201).json(payment);
   } catch (error) {
-    console.log('error', error);
-    res.status(500).json(error);
+    res.status(500).json(error.message);
   }
 }
 
 async function handlerGetPaymentsByUserId(req, res) {
-  const userId = req.params.id;
   const paymentId = req.params.paymentId;
-  const role = req.user.role;
   try {
     const payment = await getPaymentsByUserId(paymentId);
     return res.status(200).json(payment);

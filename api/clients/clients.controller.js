@@ -55,7 +55,6 @@ async function handlerUpdateClient(req, res) {
     // emailAccountUpdated(client.email);
     return res.status(200).json(client);
   } catch (error) {
-    console.log(error);
     return res.status(404).json({ message: `Client not found with id: ${id}` });
   }
 }

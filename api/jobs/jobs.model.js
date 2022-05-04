@@ -12,9 +12,39 @@ const JobsSchema = new mongoose.Schema(
         ref: 'professionals',
         required: true
       },
+      amount: {
+        type: Number,
+        default: 0,
+      },
       payment :{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'payments',
+      },
+      title: {
+        type: String,
+        required: true,
+        trim: true
+      },
+      objective: {
+        type: String,
+        required: true,
+        trim: true
+      },
+      conditionsClients: {
+        type: [],
+      },
+      evidenceClients: {
+        type: [],
+      },
+      conditionsProfessionals: {
+        type: [],
+      },
+      evidenceProfessionals: {
+        type: [],
+      },
+      status: {
+        type: String,
+        default: 'Oferta'
       },
       startDate: {
         type: Date,
@@ -23,19 +53,6 @@ const JobsSchema = new mongoose.Schema(
       completionDate: {
         type: Date
       },
-      objective: {
-        type: String,
-        required: true,
-        trim: true
-      },
-      conditions: {
-        type: [String],
-        required: true
-      },
-      status: {
-        type: String,
-        default: 'Oferta'
-      },
       clientFeedback: {
         type: String
       },
@@ -43,4 +60,4 @@ const JobsSchema = new mongoose.Schema(
   { versionKey: false }
 );
 
-module.exports = new mongoose.model('jobs', JobsSchema);
+module.exports = mongoose.model('jobs', JobsSchema);

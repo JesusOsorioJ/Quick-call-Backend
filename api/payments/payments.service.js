@@ -30,16 +30,16 @@ async function retrieveCustomer(customerId) {
   }
 }
 
-async function makePayment({ paymentMethod, amount, customer }) {
+async function makePayment({ paymentMethod, amount, customer, description }) {
   const { id } = paymentMethod;
 
   try {
     const payment = await stripe.paymentIntents.create({
       payment_method: id,
       amount,
-      currency: 'usd',
+      currency: 'cop',
       confirm: true,
-      description: 'Example charge',
+      description: description,
       customer: customer.id,
       // Automatically send receipts when payments are successful
       receipt_email: customer.email,

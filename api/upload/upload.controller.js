@@ -3,7 +3,6 @@ const { uploadImage, deleteImage } = require('./upload.service');
 async function handlerCreateImage(req, res) {
     try {
       const { file } = req;
-      console.log(file);
       const result  = await uploadImage(file.path);
       return res.status(200).json(result);
     } catch (error) {
