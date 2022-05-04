@@ -6,7 +6,14 @@ const {
   updateJobsById } = require('./jobs.service')
 const { getClientById } = require('../clients/clients.service')
 const { getProfessionalById } = require('../professionals/professionals.service');
-const { emailJobCreatedClient, emailJobCreatedProfessional } = require('../../utils/sendgrid');
+const {
+  emailJobCreatedClient,
+  emailJobCreatedProfessional,
+  emailJobQuoteClient,
+  emailJobPaidProfessional,
+  emailJobFinishedClient,
+  emailJobClosedProfessional,
+} = require('../../utils/sendgrid');
 
 async function handlerAllJobs(req, res) {
   try {
@@ -22,8 +29,8 @@ async function handlerCreateJob(req, res) {
     const job = await createJob(newJob);
     const client = await getClientById(job.client)
     const professional = await getProfessionalById(job.professional)
-    // emailJobCreatedClient(client, job.title);
-    // emailJobCreatedProfessional(professional);
+    emailJobCreatedClient(client, job);
+    emailJobCreatedProfessional(professional, job);
     return res.status(201).json(job);
   } catch (error) {
     return res.status(500).json(error.message);
@@ -56,26 +63,31 @@ async function handlerUpdateJob(req, res) {
   const {id} = req.params
 
   try {
-    const jobs = await updateJobsById(id, editJob);
-    switch (editJob.status) {
+    let client, professional;
+    const job = await updateJobsById(id, editJob);
+    console.log(job)
+    switch (job.status) {
       case 'Pendiente pago':
-        console.log('acá es pendiente pago');
-        break;
-      case 'En progreso':
-        console.log('acá es en progreso');
+        client = await getClientById(job.client);
+        await emailJobQuoteClient(client, job);
         break;
       case 'Finalizado':
         console.log('acá es finalizado');
+        client = await getClientById(job.client);
+        await emailJobFinishedClient(client, job);
         break;
       case 'Cerrado':
         console.log('acá es cerrado');
+        professional = await getProfessionalById(job.professional);
+        await emailJobClosedProfessional(professional, job);
         break;
       default:
         console.log('acá es default');
     }
-    return res.status(200).json(jobs);
+    return res.status(200).json(job);
   } catch (error) {
-    return res.status(404).json(error);
+    console.log(error.message)
+    return res.status(404).json(error.message);
   }
 }
 

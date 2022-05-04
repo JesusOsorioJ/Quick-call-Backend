@@ -2,7 +2,9 @@ const {
   makePayment, createPayment, createCustomer, retrieveCustomer, getPaymentsByUserId
 } = require('./payments.service');
 const { updateClient } = require('../clients/clients.service');
+const { getProfessionalById } = require('../professionals/professionals.service');
 const { updateJobsById } = require('../jobs/jobs.service');
+const { emailJobPaidProfessional } = require('../../utils/sendgrid');
 
 async function handlerPayment(req, res) {
   const { paymentMethod, amount, description, jobId } = req.body;
@@ -39,7 +41,11 @@ async function handlerPayment(req, res) {
       userId: req.user._id,
     };
     const { _id } = await createPayment(registeredPayment);
-    await updateJobsById(jobId, { payment: _id, status: 'En progreso' });
+    const job = await updateJobsById(jobId, { payment: _id, status: 'En progreso' });
+
+    const professional = await getProfessionalById(job.professional);
+    await emailJobPaidProfessional(professional, job);
+
     res.status(201).json(payment);
   } catch (error) {
     res.status(500).json(error.message);

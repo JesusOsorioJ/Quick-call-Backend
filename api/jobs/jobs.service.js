@@ -16,7 +16,7 @@ async function getJobsByUserId(userId, role) {
   return await jobsModel.find({ [role]: userId });
 }
 async function updateJobsById (id, change) {
-  return await jobsModel.findByIdAndUpdate(id, change);
+  return await jobsModel.findByIdAndUpdate(id, change, { new: true });
 }
 
 module.exports = { getAllJobs, createJob, getJobById, getJobsByUserId, updateJobsById };
