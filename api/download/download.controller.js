@@ -10,10 +10,17 @@ async function handlerJobPdfDownload(req, res) {
         const client = await getClientById(job.client);
         const professional = await getProfessionalById(job.professional);
 
-        return buildPdfJob(id, job, client, professional, res);
 
-        console.log('prueba')
-        res.download(`./temp/${id}.pdf`, (err) => { if (err) { console.log(err); } });
+        const stream = res.writeHead(200, {
+            'Content-Type': 'application/pdf',
+            'Content-Disposition': `attachment; filename=Jobfile_${id}.pdf`,
+        });
+
+        buildPdfJob(
+            { job, client, professional },
+            (data) => { stream.write(data); },
+            () => { stream.end(); }
+        );
 
     } catch (error) {
         return res.status(500).json(error.message);
