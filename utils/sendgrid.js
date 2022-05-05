@@ -25,6 +25,26 @@ function emailClientAccountCreated(information) {
     });
 }
 
+function emailProfessionalAccountCreated(information) {
+  const { email, name } = information;
+  const msg = {
+    to: email,
+    from: baseNoReply,
+    dynamic_template_data: {
+      name: name.split(' ')[0],
+    },
+    template_id: 'd-49d02c6de67847ff96a2f11bff57beaf'
+  }
+
+  sgMail.send(msg)
+    .then(() => {
+      console.log('🚀 ~ file: sendgrid.js ~ line 32 ~ emailProfessionalAccountCreated ~ email sent');
+    })
+    .catch((error) => {
+      console.log('🚀 ~ file: sendgrid.js ~ line 36 ~ emailProfessionalAccountCreated ~ error', error);
+    });
+}
+
 function emailAccountUpdated(email) {
   const currentDateTime = new Date();
   const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -206,6 +226,7 @@ function emailJobClosedProfessional(professional, job) {
 
 module.exports = {
   emailClientAccountCreated,
+  emailProfessionalAccountCreated,
   emailAccountUpdated,
   emailPQRCreated,
   emailJobCreatedProfessional,
