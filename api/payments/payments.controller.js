@@ -48,7 +48,7 @@ async function handlerPayment(req, res) {
 
     res.status(201).json(payment);
   } catch (error) {
-    res.status(500).json(error.message);
+    res.status(500).json(error);
   }
 }
 

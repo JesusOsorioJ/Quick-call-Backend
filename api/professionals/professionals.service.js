@@ -17,8 +17,8 @@ async function createProfessional (body) {
   return await professionals.create(body);
 }
 
-async function editProfessional (id, change) {
-  return await professionals.findByIdAndUpdate(id, change);
+async function updateProfessional (id, change) {
+  return await professionals.findByIdAndUpdate(id, change, { new: true });
 }
 
 module.exports={
@@ -26,5 +26,5 @@ module.exports={
   getProfessionalById,
   getProfessionalByEmail,
   createProfessional,
-  editProfessional,
+  updateProfessional,
 }

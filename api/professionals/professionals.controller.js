@@ -2,8 +2,10 @@ const {
   allProfessionals,
   getProfessionalById,
   createProfessional,
-  editProfessional,
+  updateProfessional,
 } = require("./professionals.service");
+
+const { emailProfessionalAccountCreated } = require('../../utils/sendgrid');
 
 async function handlerAllProfessionals(req, res) {
   try {
@@ -38,19 +40,19 @@ async function handlerCreateProfessional(req, res) {
   try {
     const newProfessional = req.body;
     const profesional = await createProfessional(newProfessional);
-    // Email for account creation
+    await emailProfessionalAccountCreated(profesional);
     return res.status(201).json(profesional);
   } catch (error) {
     return res.status(500).json(error);
   }
 }
 
-async function handlerEditProfessional(req, res) {
-  const editedProfessional = req.body;
-  const {id} = req.params
+async function handlerUpdateProfessional(req, res) {
+  const updatedProfessional = req.body;
+  const { id } = req.params
 
   try {
-    const profesional = await editProfessional(id, editedProfessional);
+    const profesional = await updateProfessional(id, updatedProfessional);
     return res.status(200).json(profesional);
   } catch (error) {
     return res.status(404).json({ message: `Profesionals not found with id: ${id}` });
@@ -61,5 +63,5 @@ module.exports = {
   handlerAllProfessionals,
   handlergetProfessionalById,
   handlerCreateProfessional,
-  handlerEditProfessional,
+  handlerUpdateProfessional,
 };
