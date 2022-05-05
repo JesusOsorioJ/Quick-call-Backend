@@ -3,41 +3,61 @@ const mongoose = require('mongoose');
 const JobsSchema = new mongoose.Schema(
   {
       client: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'client',
+        required: true
       },
       professional: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'professionals',
+        required: true
+      },
+      amount: {
+        type: Number,
+        default: 0,
+      },
+      payment :{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'payments',
+      },
+      title: {
+        type: String,
+        required: true,
+        trim: true
+      },
+      objective: {
+        type: String,
+        required: true,
+        trim: true
+      },
+      conditionsClients: {
+        type: [],
+      },
+      evidenceClients: {
+        type: [],
+      },
+      conditionsProfessionals: {
+        type: [],
+      },
+      evidenceProfessionals: {
+        type: [],
+      },
+      status: {
+        type: String,
+        default: 'Oferta'
       },
       startDate: {
-        type: Date
+        type: Date,
+        default: Date()
       },
       completionDate: {
         type: Date
-      },
-      expectedCompletionTime: {
-        type: Date
-      },
-      roles: {
-        type: String
-      },
-      objectives: {
-        type: String
-      },
-      conditions: {
-        type: [],
-        default: null
-      },
-      status: {
-        type: String
-      },
-      comments: {
-        type: String
       },
       clientFeedback: {
         type: String
       },
   },
-  { _id: mongoose.Schema.Types.ObjectId}
+  { versionKey: false }
 );
 
-module.exports = new mongoose.model('jobs', JobsSchema);
+module.exports = mongoose.model('jobs', JobsSchema);

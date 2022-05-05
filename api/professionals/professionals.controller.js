@@ -1,19 +1,33 @@
-const { AllProfessionals,
-  OneProfessional,
-  CreateProfessional,
-  EditProfessional,
-  TypeProfessional,
+const {
+  allProfessionals,
+  getProfessionalById,
+  createProfessional,
+  editProfessional,
 } = require("./professionals.service");
 
 async function handlerAllProfessionals(req, res) {
-  const professional = await AllProfessionals();
-  return res.json(professional);
+  try {
+    if (req.query.specialties) {
+      const specialtyName = req.query.specialties;
+      req.query.specialties = {
+        $elemMatch: {
+          name: specialtyName,
+          isCertified: true,
+        }
+      };
+    }
+    const professional = await allProfessionals(req.query);
+    return res.status(200).json(professional);
+  } catch (error) {
+    return res.status(400).json(error);
+  }
 }
 
-async function handlerOneProfessional(req, res) {
+
+async function handlergetProfessionalById(req, res) {
   const id = req.params.id;
   try{
-  const professional = await OneProfessional(id);
+  const professional = await getProfessionalById(id);
   return res.status(200).json(professional);
   }catch(error) {
   return  res.status(404).json({ message: `Professional not found with id: ${id}` });
@@ -21,38 +35,31 @@ async function handlerOneProfessional(req, res) {
 }
 
 async function handlerCreateProfessional(req, res) {
-  const newProfessional = req.body;
-  const profesional = await CreateProfessional(newProfessional);
-  return res.status(201).json(profesional);
+  try {
+    const newProfessional = req.body;
+    const profesional = await createProfessional(newProfessional);
+    // Email for account creation
+    return res.status(201).json(profesional);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
 }
 
 async function handlerEditProfessional(req, res) {
-  const EditeProfessional = req.body;
+  const editedProfessional = req.body;
   const {id} = req.params
 
   try {
-    const profesional = await EditProfessional(id, EditeProfessional);
-    return res.status(201).json(profesional);
+    const profesional = await editProfessional(id, editedProfessional);
+    return res.status(200).json(profesional);
   } catch (error) {
     return res.status(404).json({ message: `Profesionals not found with id: ${id}` });
-  }
-
- }
-
-async function handlerTypeProfessional(req, res) {
-  const {filter ,type, subtype} = req.query;
-  try{
-    const professional = await TypeProfessional (filter, type, subtype);
-    res.status(200).json(professional);
-  } catch(error) {
-    res.status(404).json({ message: `Professional not found with this ${filter}` });
   }
 }
 
 module.exports = {
   handlerAllProfessionals,
-  handlerOneProfessional,
+  handlergetProfessionalById,
   handlerCreateProfessional,
   handlerEditProfessional,
-  handlerTypeProfessional,
 };

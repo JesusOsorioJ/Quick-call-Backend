@@ -1,18 +1,33 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
+const location = new mongoose.Schema(
+    {
+        type: {
+            type: String,
+            default: 'Point'
+        },
+        coordinates: {
+            type: [Number],
+            default: [0, 0]
+        }
+    },
+    { _id: false }
+);
 
 const specialty = new mongoose.Schema(
     {
-        certified: {
+        name: {
             type: String,
-            required: false
+            required: true
         },
-        inProgress: {
+        certificate: {
             type: String,
-            required: false
+            default: ''
         },
-        nonCertified: {
-            type: String,
-            required: false
+        isCertified: {
+            type: Boolean,
+            default: false
         }
     },
     { _id: false }
@@ -21,12 +36,12 @@ const specialty = new mongoose.Schema(
 const image = new mongoose.Schema(
     {
         profile: {
-            data: Buffer,
-            contentType: String
+            type: String,
+            default: 'https://res.cloudinary.com/djymj6koy/image/upload/v1650237628/m3lybocpbl0iuqhdkyfy.svg'
         },
         myJobs: {
-            data: Buffer,
-            contentType: String
+            type: Array,
+            default: null
         }
     },
     { _id: false }
@@ -48,9 +63,13 @@ const socialSecurity = new mongoose.Schema (
 
 const availability = new mongoose.Schema(
     {
-        schedule: {
-            type: String,
-            required: false
+        startTime: {
+            type: Date,
+            default: "00:00",
+        },
+        endTime: {
+            type: Date,
+            default: "00:00",
         },
         fullAvailability: {
             type: Boolean,
@@ -69,6 +88,7 @@ const professionalSchema = new mongoose.Schema(
         email: {
             type: String,
             required: false,
+            lowercase: true,
             trim: true
         },
         password: {
@@ -78,24 +98,24 @@ const professionalSchema = new mongoose.Schema(
         },
         phoneNumber: {
             type: Number,
+            default: null,
             trim: true,
         },
         city: {
             type: String,
+            default: null,
             trim: true
         },
         myDescription: {
             type: String,
-            required: false,
+            default: null,
             trim: true
         },
-        specialty: {
-            type: [specialty],
-            default: null
+        specialties: {
+            type: [specialty]
         },
         image: {
             type: image,
-            default: null
         },
         socialSecurity: {
             type: socialSecurity,
@@ -104,10 +124,91 @@ const professionalSchema = new mongoose.Schema(
         availability: {
             type: availability,
             default: null
+        },
+        location: {
+            type: location,
         }
     },
     { timestamps: true },
     { versionKey: false }
 );
 
-module.exports = new mongoose.model('professional', professionalSchema);
+professionalSchema.pre('save', async function (next) {
+    const user = this;
+
+    try {
+        if(!user.isModified('password')) {
+            return next();
+        }
+
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(user.password, salt);
+
+      user.password = hash;
+      next();
+
+    } catch (error) {
+        return next(error);
+    }
+});
+
+professionalSchema.pre('findOneAndUpdate', async function (next) {
+    const query = this;
+
+    try {
+        if (query._update.password) {
+            const salt = await bcrypt.genSalt(10);
+            const hashed = await bcrypt.hash(query._update.password, salt)
+            query._update.password = hashed;
+        }
+        next();
+    } catch (error) {
+        return next(error);
+    }
+});
+
+professionalSchema.methods.comparePassword = async function (candidatePassword) {
+    const user = this;
+    return bcrypt.compare(candidatePassword, user.password);
+};
+
+professionalSchema.virtual('profile').get(function () {
+    const {
+        name,
+        email
+    } = this;
+
+    return {
+        name,
+        email
+    };
+});
+
+professionalSchema.virtual('dashboardProfile').get(function () {
+    const {
+        _id,
+        name,
+        email,
+        phoneNumber,
+        city,
+        myDescription,
+        specialties,
+        image,
+        socialSecurity,
+        availability,
+    } = this;
+    return {
+        _id,
+        name,
+        email,
+        phoneNumber,
+        city,
+        myDescription,
+        specialties,
+        image,
+        socialSecurity,
+        availability,
+    };
+})
+
+module.exports = mongoose.model('professional', professionalSchema);

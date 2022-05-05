@@ -1,19 +1,15 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 
-const paymentSchema = new mongoose.Schema(
+const location = new mongoose.Schema(
     {
-        cardNumber: {
-            type: Number,
-            required: true
-        },
-        expDate: {
+        type: {
             type: String,
-            required: true
+            default: 'Point'
         },
-        cvv: {
-            type: Number,
-            required: true
+        coordinates: {
+            type: [Number],
+            default: [0, 0]
         }
     },
     { _id: false }
@@ -30,6 +26,7 @@ const ClientSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
+            lowercase: true,
             unique: true
         },
         password: {
@@ -49,11 +46,19 @@ const ClientSchema = new mongoose.Schema(
         },
         profilePicture: {
             type: String,
-            default: "avatar.png"
+            default: "https://res.cloudinary.com/dt7ptke8d/image/upload/v1651275873/user-icon.svg"
         },
         payment: {
-            type: [paymentSchema],
+            type: Object,
             default: null
+        },
+        favorites: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: 'professionals',
+            default: null
+        },
+        location: {
+            type: location
         }
     },
     { timestamps: true },
@@ -79,11 +84,11 @@ ClientSchema.pre('save', async function (next) {
     }
 });
 
-ClientSchema.pre('findByIdAndUpdate', async function (next) {
+ClientSchema.pre('findOneAndUpdate', async function (next) {
     const query = this;
 
     try {
-        if (query._update.password) {
+        if (query._update?.password) {
             const salt = await bcrypt.genSalt(10);
             const hashed = await bcrypt.hash(query._update.password, salt)
             query._update.password = hashed;
@@ -100,14 +105,39 @@ ClientSchema.methods.comparePassword = async function (candidatePassword) {
 };
 
 ClientSchema.virtual('profile').get(function () {
-const {
-      name, email,
-    } = this;
+    const {
+        name,
+        email
+      } = this;
 
     return {
       name,
-      email,
+      email
     };
-  });
+});
+
+ClientSchema.virtual('dashboardProfile').get(function () {
+    const {
+        _id,
+        name,
+        email,
+        phoneNumber,
+        city,
+        profilePicture,
+        favorites,
+        location
+    } = this;
+
+    return {
+        _id,
+        name,
+        email,
+        phoneNumber,
+        city,
+        profilePicture,
+        favorites,
+        location
+    };
+});
 
 module.exports = mongoose.model('Client', ClientSchema);

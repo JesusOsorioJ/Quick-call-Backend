@@ -4,7 +4,7 @@ async function getAllClients() {
   return await ClientModel.find();
 }
 
-async function getOneClient(id) {
+async function getClientById(id) {
     return await ClientModel.findById(id);
 }
 
@@ -17,13 +17,15 @@ async function createClient(body) {
 }
 
 async function updateClient(id, body) {
-  const updatedClient = await ClientModel.findByIdAndUpdate(id, body)
+  const updatedClient = await ClientModel.findByIdAndUpdate(id, body, {
+    new: true
+  })
   return updatedClient;
 }
 
 module.exports = {
   getAllClients,
-  getOneClient,
+  getClientById,
   getClientByEmail,
   createClient,
   updateClient,
