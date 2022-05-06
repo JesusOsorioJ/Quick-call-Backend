@@ -1,17 +1,5 @@
 const mongoose = require('mongoose');
 
-const evidence = new mongoose.Schema(
-  {
-      videos: {
-        type: []
-      },
-      photos: {
-        type: []
-      }
-  },
-  { _id: false, versionKey: false }
-);
-
 const PQRSSchema = new mongoose.Schema(
   {
       petitioner: {
@@ -33,7 +21,7 @@ const PQRSSchema = new mongoose.Schema(
         trim: true
       },
       evidence: {
-        type: evidence,
+        type: [String],
         default: null
       },
       status: {
