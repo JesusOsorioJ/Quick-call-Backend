@@ -64,11 +64,11 @@ const socialSecurity = new mongoose.Schema (
 const availability = new mongoose.Schema(
     {
         startTime: {
-            type: Date,
+            type: String,
             default: "00:00",
         },
         endTime: {
-            type: Date,
+            type: String,
             default: "00:00",
         },
         fullAvailability: {
