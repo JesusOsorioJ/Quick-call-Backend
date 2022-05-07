@@ -65,19 +65,16 @@ async function handlerUpdateJob(req, res) {
   try {
     let client, professional;
     const job = await updateJobsById(id, editJob);
-    console.log(job)
     switch (job.status) {
       case 'Pendiente pago':
         client = await getClientById(job.client);
         await emailJobQuoteClient(client, job);
         break;
       case 'Finalizado':
-        console.log('acá es finalizado');
         client = await getClientById(job.client);
         await emailJobFinishedClient(client, job);
         break;
       case 'Cerrado':
-        console.log('acá es cerrado');
         professional = await getProfessionalById(job.professional);
         await emailJobClosedProfessional(professional, job);
         break;
