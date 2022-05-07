@@ -37,7 +37,7 @@ const image = new mongoose.Schema(
     {
         profile: {
             type: String,
-            default: 'https://res.cloudinary.com/djymj6koy/image/upload/v1650237628/m3lybocpbl0iuqhdkyfy.svg'
+            default: "https://res.cloudinary.com/dt7ptke8d/image/upload/v1651275873/user-icon.svg"
         },
         myJobs: {
             type: Array,
