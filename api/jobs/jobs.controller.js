@@ -14,6 +14,7 @@ const {
   emailJobFinishedClient,
   emailJobClosedProfessional,
 } = require('../../utils/sendgrid');
+const { socket } = require('../../config/websocket');
 
 async function handlerAllJobs(req, res) {
   try {
@@ -27,8 +28,15 @@ async function handlerCreateJob(req, res) {
   try {
     const newJob = req.body;
     const job = await createJob(newJob);
-    const client = await getClientById(job.client)
-    const professional = await getProfessionalById(job.professional)
+    const idJob = job._id
+    const client = await getClientById(job.client);
+    const idClient = client._id
+    const professional = await getProfessionalById(job.professional);
+    const idProfessional = professional._id
+    
+    await socket.io.emit(`${idClient}:createJobs`, idJob);
+    await socket.io.emit(`${idProfessional}:createJobs`, idJob);
+
     emailJobCreatedClient(client, job);
     emailJobCreatedProfessional(professional, job);
     return res.status(201).json(job);
@@ -60,7 +68,7 @@ async function handlerGetJobsByUserId(req, res) {
 
 async function handlerUpdateJob(req, res) {
   const editJob = req.body;
-  const {id} = req.params
+  const {id} = req.params;
 
   try {
     let client, professional;
