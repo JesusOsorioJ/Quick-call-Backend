@@ -10,7 +10,15 @@ const JobsSchema = new mongoose.Schema(
       professional: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'professionals',
+        required: true,
+      },
+      clientName: {
+        type: String,
         required: true
+      },
+      professionalName: {
+        type: String,
+        required: true,
       },
       amount: {
         type: Number,

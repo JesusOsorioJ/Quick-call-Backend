@@ -57,7 +57,7 @@ async function createPayment(payment) {
   return await Payment.create(payment);
 }
 
-async function getPaymentsByUserId(paymentId) { // Possible rename to handlerGetPaymentsById
+async function getPaymentById(paymentId) {
   return await Payment.findById(paymentId);
 }
 
@@ -66,5 +66,5 @@ module.exports = {
   createCustomer,
   createPayment,
   retrieveCustomer,
-  getPaymentsByUserId,
+  getPaymentById,
 };
