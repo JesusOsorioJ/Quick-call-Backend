@@ -6,7 +6,6 @@ function eventGetAllMessages(id, messages) {
 
 function eventCreateMessage(id, message) {
     const ccs = socket.io.emit(`${id}:create`, message);
-    console.log("csssss2", ccs)
 }
 
 function eventDeleteMessage(id, message) {

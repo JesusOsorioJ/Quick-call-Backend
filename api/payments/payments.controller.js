@@ -5,6 +5,8 @@ const { updateClient } = require('../clients/clients.service');
 const { getProfessionalById } = require('../professionals/professionals.service');
 const { updateJobsById } = require('../jobs/jobs.service');
 const { emailJobPaidProfessional } = require('../../utils/sendgrid');
+const { socket } = require('../../config/websocket');
+
 
 async function handlerPayment(req, res) {
   const { paymentMethod, amount, description, jobId } = req.body;
@@ -41,9 +43,12 @@ async function handlerPayment(req, res) {
       userId: req.user._id,
     };
     const { _id } = await createPayment(registeredPayment);
+
     const job = await updateJobsById(jobId, { payment: _id, status: 'En progreso' });
 
     const professional = await getProfessionalById(job.professional);
+    await socket.io.emit(`${req.user._id}:createPayment`, _id);
+    await socket.io.emit(`${professional._id}:createPayment`, jobId);
     await emailJobPaidProfessional(professional, job);
 
     res.status(201).json(payment);
